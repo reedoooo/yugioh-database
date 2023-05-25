@@ -3,27 +3,28 @@ import {
   Input,
   Select,
   SimpleGrid,
-  Image,
+  // Image,
   VStack,
-  Text,
+  // Text,
   FormLabel,
   Button,
-  GridItem,
+  // GridItem,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-// import { default as Axios } from "axios";
-import axios from "axios";
+import { default as Axios } from "axios";
+// import axios from "axios";
 import "./search.css";
-// import { useDispatch } from "react-redux";
+// import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Cards from "../cards/Cards";
 
 
-// var axios = Axios.create({
-//   baseURL: "https://db.ygoprodeck.com/api/v7/",
-// });
+var axios = Axios.create({
+  baseURL: "https://db.ygoprodeck.com/api/v7/",
+});
 
 const Search = () => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
   const [type, setType] = useState("");
@@ -32,57 +33,57 @@ const Search = () => {
   //   const cards = useSelector((state) => state.cards);
   const [cards, setCards] = useState([]); // local state for cards
 
+//   const request = async () => {
+//     try {
+//       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
+//       setCards(response.data);
+//     } catch (err) {
+//       alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
+//     }
+//   };
+  
+//   const queryBuilder = () => {
+//     const params = [
+//       name && `${name}`,
+//       race && `race=${race}`,
+//       type && `type=${type}`,
+//       level && `level=${level}`,
+//       attribute && `attribute=${attribute}`
+//     ].filter(Boolean).join('&');
+  
+//     return params;
+//   };
+  
+  
   const request = async () => {
+    dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
-      const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
-      setCards(response.data);
+      let response = await axios.get(`/${queryBuilder()}`);
+      console.log(response.data);
+      setCards(response.data.data); // Update the state with the first card data
+
+      if (response.data.meta.pages_remaining !== 0) {
+        dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: true });
+        dispatch({
+          type: "SET_NEXT_PAGE_TO_LOAD",
+          payload: response.data.meta.next_page,
+        });
+      } else {
+        dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: false });
+      }
+      dispatch({ type: "UPDATE_LISTER", payload: response.data.data });
+      dispatch({ type: "SET_LOADING_STATE", payload: false });
     } catch (err) {
-      alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
+      alert(
+        `I-i'm sorry, something just gone wrong =(.\n Change the parameters and try again`
+      );
+      dispatch({ type: "SET_LOADING_STATE", payload: false });
     }
   };
-  
+
   const queryBuilder = () => {
-    const params = [
-      name && `${name}`,
-      race && `race=${race}`,
-      type && `type=${type}`,
-      level && `level=${level}`,
-      attribute && `attribute=${attribute}`
-    ].filter(Boolean).join('&');
-  
-    return params;
+    return `cardinfo.php?` + name + race + type + level + attribute;
   };
-  
-  
-  // const request = async () => {
-  //   dispatch({ type: "SET_LOADING_STATE", payload: true });
-  //   try {
-  //     let response = await axios.get(`/${queryBuilder()}`);
-  //     console.log(response.data);
-  //     setCards(response.data.data); // Update the state with the first card data
-
-  //     if (response.data.meta.pages_remaining !== 0) {
-  //       dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: true });
-  //       dispatch({
-  //         type: "SET_NEXT_PAGE_TO_LOAD",
-  //         payload: response.data.meta.next_page,
-  //       });
-  //     } else {
-  //       dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: false });
-  //     }
-  //     dispatch({ type: "UPDATE_LISTER", payload: response.data.data });
-  //     dispatch({ type: "SET_LOADING_STATE", payload: false });
-  //   } catch (err) {
-  //     alert(
-  //       `I-i'm sorry, something just gone wrong =(.\n Change the parameters and try again`
-  //     );
-  //     dispatch({ type: "SET_LOADING_STATE", payload: false });
-  //   }
-  // };
-
-  // const queryBuilder = () => {
-  //   return `cardinfo.php?` + name + race + type + level + attribute;
-  // };
 
   console.log(cards);
 
