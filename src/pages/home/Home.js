@@ -4,6 +4,7 @@ import { extendTheme } from "@chakra-ui/react";
 import Search from "../../containers/search/Search";
 // import Login from "../../containers/login/Login";
 import Navbar from "../../containers/navbar/Navbar";
+// import Deck from "../../containers/deck/Deck";
 
 const theme = extendTheme({
   colors: {
