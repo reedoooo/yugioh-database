@@ -1,30 +1,52 @@
-import React from 'react';
-import shortid from 'shortid';
-import Card from '../Card';
-import {useDispatch, useSelector} from 'react-redux';
-import './deck.css';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./deck.css";
+import Cards from "../../containers/cards/Cards";
 
-const Deck = () => {
-    const dispatch = useDispatch();
-    let main_deck = useSelector(state => state.deck.main);
-    let extra_deck = useSelector(state => state.deck.extra);
+const Deck = ({ cardInfo, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
+  const dispatch = useDispatch();
 
-    return (
-        <div className="deck-container">
-            <div className="deck">
-                <div>
-                    {main_deck.map( (card, index) => 
-                        <Card cardInfo={card} key={shortid.generate()} index={index}/>
-                    )}
-                </div>
-                <div>
-                    {extra_deck.map( (card, index) => 
-                        <Card cardInfo={card} key={shortid.generate()} index={index}/>
-                    )}
-                </div>
-            </div>
+  // Safe access using optional chaining and nullish coalescing operator
+  const safeCardInfo = cardInfo ?? [];
+  const safeSetCards = setCards ?? (() => {});
+  const safeCardAddedToDeck = cardAddedToDeck ?? {};
+  const safeSetCardAddedToDeck = setCardAddedToDeck ?? (() => {});
+
+  return (
+    <div className="deck-container">
+      <div className="deck">
+        <div>
+        {safeCardInfo.map((card, index) => {
+          if (index < safeCardInfo.length - 1) {
+            return (
+                <Cards
+                  cardAddedToDeck={safeCardAddedToDeck}
+                  setCardAddedToDeck={safeSetCardAddedToDeck}
+                  key={index}
+                  cardInfo={safeCardInfo[index + 1]}
+                  // savedCardsData={savedCardsData[index + 1]}
+                  index={index}
+                />
+            );
+          }
+          return null;
+        })}
         </div>
-    )
-}
+        {/* <div>
+          {extra_deck.map((card, index) => (
+            <Cards
+              cardAddedToDeck={cardAddedToDeck}
+              setCardAddedToDeck={setCardAddedToDeck}
+              key={index}
+              cardInfo={cards[index + 1]}
+              // savedCardsData={savedCardsData[index + 1]}
+              index={index}
+            />
+          ))}
+        </div> */}
+      </div>
+    </div>
+  );
+};
 
 export default Deck;

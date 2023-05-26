@@ -4,10 +4,13 @@ import React, { useState } from "react";
 // import Dialog from "@mui/material/Dialog";
 import "./cards.css";
 import placeholderImage from "../../assets/placeholder.png";
-import { GridItem } from "@chakra-ui/react";
+import { GridItem, useDisclosure } from "@chakra-ui/react";
 import CardModal from "../../components/modals/CardModal";
 
-const Cards = ({ cardInfo, index }) => {
+const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck  }) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  // const [cardAddedToDeck, setCardAddedToDeck] = useState(false);
+
   //   const [isHovering, setHovering] = useState(false);
   //   const [open, setOpen] = useState(false);
   //   const dispatch = useDispatch();
@@ -17,19 +20,24 @@ const Cards = ({ cardInfo, index }) => {
   //   const dispatch = useDispatch();
   const img_url = cardInfo?.card_images[0]?.image_url_small || "";
   const handleClickOpen = () => setOpen(true);
-  const handleClose = () => {
-    setOpen(false);
-    setHovering(false);
-  };
+  const handleClose = () => setOpen(false);
+  // const handleClose = () => {
+  //   setOpen(false);
+  //   setHovering(false);
+  // };
   console.log(cardInfo);
+  
   const handleClick = (event) => {
     setHovering(false); //disables tooltip
-    if (event.buttons === 2) {
-      //if right click opens modal
-      handleClickOpen();
-      event.preventDefault();
-      return false;
-    }
+    handleClickOpen();
+
+    // if (event.buttons === 2) {
+    //   //if right click opens modal
+    //   handleClickOpen();
+
+    //   event.preventDefault();
+    //   return false;
+    // }
   };
 
   const TooltipDisplay = (
@@ -154,6 +162,8 @@ const Cards = ({ cardInfo, index }) => {
     <GridItem>
       <div
         className="card"
+        cardAddedToDeck={cardAddedToDeck}
+        setCardAddedToDeck={setCardAddedToDeck}
         onMouseOver={() => setHovering(true)}
         onMouseOut={() => setHovering(false)}
       >

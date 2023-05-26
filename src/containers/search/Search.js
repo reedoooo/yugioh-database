@@ -23,7 +23,7 @@ var axios = Axios.create({
   baseURL: "https://db.ygoprodeck.com/api/v7/",
 });
 
-const Search = () => {
+const Search = ({ cards, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
@@ -31,7 +31,7 @@ const Search = () => {
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
   //   const cards = useSelector((state) => state.cards);
-  const [cards, setCards] = useState([]); // local state for cards
+  // const [cards, setCards] = useState([]); // local state for cards
 
 //   const request = async () => {
 //     try {
@@ -277,6 +277,8 @@ const Search = () => {
               if (index < cards.length - 1) {
                 return (
                     <Cards
+                      cardAddedToDeck={cardAddedToDeck}
+                      setCardAddedToDeck={setCardAddedToDeck}
                       key={index}
                       cardInfo={cards[index + 1]}
                       // savedCardsData={savedCardsData[index + 1]}

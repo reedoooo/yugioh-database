@@ -1,5 +1,5 @@
 import { Box, Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
-import LoginModal from "../../components/modals/LoginModal";
+// import LoginModal from "../../components/modals/LoginModal";
 
 const NavBar = ({ username }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -27,7 +27,7 @@ const NavBar = ({ username }) => {
           <Text mr={4}>Welcome, {username}</Text>
 
           <Button onClick={handleOpen}>Login</Button>
-          <LoginModal isOpen={isOpen} onClose={onClose} />
+          {/* <LoginModal isOpen={isOpen} onClose={onClose} /> */}
           {/* <LoginModal isOpen={isOpen} onClose={onClose} /> */}
 
           <Button colorScheme="teal" variant="outline">
