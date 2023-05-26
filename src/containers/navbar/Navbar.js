@@ -1,12 +1,28 @@
-import { Box, Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  Button,
+  useDisclosure,
+  Avatar,
+  Menu,
+  MenuButton,
+  MenuList,
+} from "@chakra-ui/react";
 import { NavLink } from "react-router-dom";
 import LoginModal from "../../components/modals/LoginModal";
 import SignUpModal from "../../components/modals/SignUpModal";
 import { UserContext } from "../../context/UserContext"; // Assuming UserContext is in the same directory
 import { useContext, useEffect } from "react";
+import { FaBars } from "react-icons/fa";
+import { AiOutlineLogout } from "react-icons/ai";
+// import { extendTheme } from "@chakra-ui/react";
+import NavLinkItem from "./NavLinkItem"; // Assuming NavLinkItem is in the same directory
 
 const NavBar = () => {
   const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
+  const { onClose } = useDisclosure();
+  // const { isOpen, onToggle } = useDisclosure();
 
   const {
     isOpen: isLoginOpen,
@@ -34,15 +50,22 @@ const NavBar = () => {
   useEffect(() => {
     // Load user token from cookie on component mount
     const token = getCookie("token");
-    if (token) {
-      setUser({ token });
+    const username = getCookie("username");
+    const id = getCookie("id");
+    const role = getCookie("role");
+
+    if (token && username && id && role) {
+      setUser({ token, username, id, role });
     }
   }, [setUser]);
 
   useEffect(() => {
     // Save user token to cookie whenever it changes
     setCookie("token", user?.token);
-  }, [user?.token]);
+    setCookie("username", user?.username);
+    setCookie("id", user?.id);
+    setCookie("role", user?.role);
+  }, [user?.token, user?.username, user?.id, user?.role]);
 
   const getCookie = (name) => {
     const cookieValue = document.cookie.match(
@@ -55,7 +78,15 @@ const NavBar = () => {
     document.cookie = name + "=" + value + "; path=/";
   };
 
+  const handleLogout = () => {
+    setUser(null);
+    onClose();
+  };
+
   console.log(user);
+
+  // console.log('username', user?.username);
+
   //   const withSignUpResponse = (Component) => (props) =>
   //   <Component {...props} signUpResponse={signUpResponse} />;
 
@@ -72,51 +103,81 @@ const NavBar = () => {
       zIndex="999"
     >
       <Flex justifyContent="space-between" alignItems="center">
-        <Text fontSize="lg">Yugioh Deck Builder</Text>
-        {/* <Image /> */}
-        <Text mr={4} align={"left"}>
-          {user?.username}
+        <Text fontSize="lg" fontWeight="bold">
+          Yugioh Deck Builder
         </Text>
-
-        <Flex>
-          <Button onClick={handleOpenLogin}>Login</Button>
+        <Button onClick={handleOpenSignUp} variant="outline">
+          SignUp
+        </Button>
+        <Button onClick={handleOpenLogin} variant="outline">
+          Login
+        </Button>
+        <Button onClick={handleLogout} variant="outline">
+          Log out
+        </Button>
+        <Box>
           <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
 
-          <Button onClick={handleOpenSignUp}>SignUp</Button>
           <SignUpModal
             isOpen={isSignUpOpen}
-            // signUpResponse={signUpResponse}
-            // setSignUpResponse={setSignUpResponse}
             onClose={onSignUpClose}
-            // onSignUp={setSignUpResponse}
           />
+        </Box>
+        <Box>
+          <Menu>
+            <MenuButton
+              as={Button}
+              rightIcon={<FaBars />}
+              variant="outline"
+              colorScheme="white"
+              size="sm"
+            >
+              Menu
+            </MenuButton>
+            <MenuList bg={"secondary.200"}>
+              <NavLinkItem to="/signupforum">Signup Forum</NavLinkItem>
+              <NavLinkItem to="/home">Home</NavLinkItem>
+              <NavLinkItem to="/usergrid">User Grid</NavLinkItem>
 
-          {/* {signUpResponse && <SignUpForum signUpResponse={signUpResponse} />} */}
-          {/* {signUpResponse && <SignUpForum signUpResponse={signUpResponse} />}  */}
-
-          <Button
-            as={NavLink}
-            to="/signupforum"
-            colorScheme="teal"
-            variant="outline"
-          >
-            Signup Forum
-          </Button>
-          <Button as={NavLink} to="/home" colorScheme="teal" variant="outline">
-            Home
-          </Button>
-          <Button
-            as={NavLink}
-            to="/usergrid"
-            colorScheme="teal"
-            variant="outline"
-          >
-            User Grid
-          </Button>
-          <Button colorScheme="teal" variant="outline">
-            Log out
-          </Button>
-        </Flex>
+              {user ? (
+                <NavLinkItem onClick={handleLogout}>
+                  <Flex alignItems="center">
+                    <AiOutlineLogout style={{ marginRight: "0.5rem" }} />
+                    Logout
+                  </Flex>
+                </NavLinkItem>
+              ) : (
+                <>
+                  <NavLinkItem as={NavLink} to="/signup">
+                    Sign Up
+                  </NavLinkItem>
+                  <NavLinkItem as={NavLink} to="/login">
+                    Login
+                  </NavLinkItem>
+                </>
+              )}
+            </MenuList>
+          </Menu>
+        </Box>
+        <Box>
+        {user && user.username ? ( // Add a conditional check for user.username
+            <Flex alignItems="center">
+              <Avatar name={user.username} size="sm" />
+              <Text ml={2} fontSize="sm">
+                {user.username}
+              </Text>
+            </Flex>
+          ) : (
+            <Flex>
+              <Button as={NavLink} to="/signup" variant="outline" size="sm">
+                Sign Up
+              </Button>
+              <Button as={NavLink} to="/login" variant="outline" size="sm">
+                Login
+              </Button>
+            </Flex>
+          )}
+        </Box>
       </Flex>
     </Box>
   );

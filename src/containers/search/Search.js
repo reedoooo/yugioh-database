@@ -8,7 +8,7 @@ import {
   // Text,
   FormLabel,
   Button,
-  extendTheme,
+  // extendTheme,
   // GridItem,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -38,20 +38,6 @@ const Search = ({
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
 
-  const theme = extendTheme({
-    shadows: {
-      outline: "0 0 0 3px #FBD38D",
-      md: "8px 0 10px -5px rgba(0, 0, 0, 0.2)",
-      lg: "10px 0 15px -5px rgba(0, 0, 0, 0.2)",
-      xl: "20px 0 25px -5px rgba(0, 0, 0, 0.2)",
-    },
-    colors: {
-      gray: {
-        500: "#A0AEC0", // Adjust the shade of gray as needed
-      },
-    },
-  });
-  
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
@@ -84,6 +70,23 @@ const Search = ({
   };
 
   console.log(cards);
+
+  const handleSearch = async () => {
+    try {
+      let response = await axios.get(`/${queryBuilder()}`);
+      console.log(response.data);
+
+      setCards(response.data.data); // Update the state with the card data
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   const levelSelector = (
     <>
@@ -231,8 +234,6 @@ const Search = ({
       overflowY="scroll"
       height="100vh"
       borderRadius="lg"
-      shadow={theme.shadows.xl}
-
       css={{
         "&::-webkit-scrollbar": {
           width: "8px",
@@ -250,7 +251,8 @@ const Search = ({
         <Input
           type="text"
           placeholder="Type card name"
-          onChange={({ target: { value } }) => setName(`&fname=${value}`)}
+          onChange={(event) => setName(`&fname=${event.target.value}`)}
+          onKeyDown={handleKeyDown}
         />
         <VStack spacing={3}>{levelSelector}</VStack>
         <VStack spacing={3}>{raceSelector}</VStack>
@@ -267,10 +269,6 @@ const Search = ({
           Search
         </Button>
 
-        {/* {cards &&
-          cards.map((card, index) => (
-            <Cards key={index} cardInfo={card} index={index} />
-          ))} */}
         <SimpleGrid columns={3} spacing={10}>
           {cards &&
             cards.map((card, index) => {
@@ -283,7 +281,6 @@ const Search = ({
                     deck={deck}
                     setDeck={setDeck}
                     cardInfo={cards[index + 1]}
-                    // savedCardsData={savedCardsData[index + 1]}
                     index={index}
                   />
                 );
