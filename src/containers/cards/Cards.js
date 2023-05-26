@@ -4,12 +4,17 @@ import React, { useState } from "react";
 // import Dialog from "@mui/material/Dialog";
 import "./cards.css";
 import placeholderImage from "../../assets/placeholder.png";
-import { GridItem, useDisclosure } from "@chakra-ui/react";
+import { GridItem } from "@chakra-ui/react";
 import CardModal from "../../components/modals/CardModal";
 
-const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck,   deck,
-  setDeck  }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const Cards = ({
+  cardInfo,
+  cardAddedToDeck,
+  setCardAddedToDeck,
+  deck,
+  setDeck,
+}) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
   // const [cardAddedToDeck, setCardAddedToDeck] = useState(false);
 
   //   const [isHovering, setHovering] = useState(false);
@@ -27,7 +32,7 @@ const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck,   deck,
   //   setHovering(false);
   // };
   console.log(cardInfo);
-  
+
   const handleClick = (event) => {
     setHovering(false); //disables tooltip
     handleClickOpen();
@@ -95,15 +100,15 @@ const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck,   deck,
   );
 
   const DialogDisplay = (
-<CardModal 
-  isOpen={open} 
-  onClose={handleClose} 
-  cardInfo={cardInfo} 
-  cardAddedToDeck={cardAddedToDeck} 
-  setCardAddedToDeck={setCardAddedToDeck} 
-  deck={deck}
-  setDeck={setDeck}
-/>
+    <CardModal
+      isOpen={open}
+      onClose={handleClose}
+      cardInfo={cardInfo}
+      cardAddedToDeck={cardAddedToDeck}
+      setCardAddedToDeck={setCardAddedToDeck}
+      deck={deck}
+      setDeck={setDeck}
+    />
   );
 
   //   const DialogDisplay = (

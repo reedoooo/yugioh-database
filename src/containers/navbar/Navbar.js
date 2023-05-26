@@ -1,15 +1,65 @@
 import { Box, Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
-// import LoginModal from "../../components/modals/LoginModal";
+import { NavLink } from "react-router-dom";
+import LoginModal from "../../components/modals/LoginModal";
+import SignUpModal from "../../components/modals/SignUpModal";
+import { UserContext } from "../../context/UserContext"; // Assuming UserContext is in the same directory
+import { useContext, useEffect } from "react";
 
-const NavBar = ({ username }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  // const [username, setUsername] = useState("");
+const NavBar = () => {
+  const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
 
-  const handleOpen = (event) => {
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onClose: onLoginClose,
+  } = useDisclosure();
+
+  const {
+    isOpen: isSignUpOpen,
+    onOpen: onSignUpOpen,
+    onClose: onSignUpClose,
+  } = useDisclosure();
+
+  const handleOpenLogin = (event) => {
     event.preventDefault();
-    console.log('click')
-    onOpen()
+    console.log("click");
+    onLoginOpen();
   };
+
+  const handleOpenSignUp = (event) => {
+    event.preventDefault();
+    console.log("click");
+    onSignUpOpen();
+  };
+  useEffect(() => {
+    // Load user token from cookie on component mount
+    const token = getCookie("token");
+    if (token) {
+      setUser({ token });
+    }
+  }, [setUser]);
+
+  useEffect(() => {
+    // Save user token to cookie whenever it changes
+    setCookie("token", user?.token);
+  }, [user?.token]);
+
+  const getCookie = (name) => {
+    const cookieValue = document.cookie.match(
+      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+    );
+    return cookieValue ? cookieValue.pop() : "";
+  };
+
+  const setCookie = (name, value) => {
+    document.cookie = name + "=" + value + "; path=/";
+  };
+
+  console.log(user);
+  //   const withSignUpResponse = (Component) => (props) =>
+  //   <Component {...props} signUpResponse={signUpResponse} />;
+
+  // const SignUpForumWithResponse = withSignUpResponse(SignUpForum);
 
   return (
     <Box
@@ -23,13 +73,46 @@ const NavBar = ({ username }) => {
     >
       <Flex justifyContent="space-between" alignItems="center">
         <Text fontSize="lg">Yugioh Deck Builder</Text>
+        {/* <Image /> */}
+        <Text mr={4} align={"left"}>
+          {user?.username}
+        </Text>
+
         <Flex>
-          <Text mr={4}>Welcome, {username}</Text>
+          <Button onClick={handleOpenLogin}>Login</Button>
+          <LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
 
-          <Button onClick={handleOpen}>Login</Button>
-          {/* <LoginModal isOpen={isOpen} onClose={onClose} /> */}
-          {/* <LoginModal isOpen={isOpen} onClose={onClose} /> */}
+          <Button onClick={handleOpenSignUp}>SignUp</Button>
+          <SignUpModal
+            isOpen={isSignUpOpen}
+            // signUpResponse={signUpResponse}
+            // setSignUpResponse={setSignUpResponse}
+            onClose={onSignUpClose}
+            // onSignUp={setSignUpResponse}
+          />
 
+          {/* {signUpResponse && <SignUpForum signUpResponse={signUpResponse} />} */}
+          {/* {signUpResponse && <SignUpForum signUpResponse={signUpResponse} />}  */}
+
+          <Button
+            as={NavLink}
+            to="/signupforum"
+            colorScheme="teal"
+            variant="outline"
+          >
+            Signup Forum
+          </Button>
+          <Button as={NavLink} to="/home" colorScheme="teal" variant="outline">
+            Home
+          </Button>
+          <Button
+            as={NavLink}
+            to="/usergrid"
+            colorScheme="teal"
+            variant="outline"
+          >
+            User Grid
+          </Button>
           <Button colorScheme="teal" variant="outline">
             Log out
           </Button>
