@@ -4,6 +4,7 @@ import { extendTheme } from "@chakra-ui/react";
 import Search from "../../containers/search/Search";
 // import Login from "../../containers/login/Login";
 import Navbar from "../../containers/navbar/Navbar";
+// import LoginModal from "../../components/modals/LoginModal";
 // import Deck from "../../containers/deck/Deck";
 
 const theme = extendTheme({
@@ -19,7 +20,7 @@ function Home() {
     <ChakraProvider theme={theme}>
       <Grid h="100vh" templateRows="1fr 9fr" templateColumns="1fr 1fr 1fr 1fr">
         {/* <Box>
-          <Login />
+          <LoginModal />
         </Box> */}
         <Box gridColumn="1 / -1" bg="gray.500">
           <Navbar />
