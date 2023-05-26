@@ -17,6 +17,7 @@ import {
            
 function LoginModal(onClose, isOpen) {
   return (
+    
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
