@@ -7,7 +7,8 @@ import placeholderImage from "../../assets/placeholder.png";
 import { GridItem, useDisclosure } from "@chakra-ui/react";
 import CardModal from "../../components/modals/CardModal";
 
-const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck  }) => {
+const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck,   deck,
+  setDeck  }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   // const [cardAddedToDeck, setCardAddedToDeck] = useState(false);
 
@@ -94,7 +95,15 @@ const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck  }) => {
   );
 
   const DialogDisplay = (
-    <CardModal isOpen={open} onClose={handleClose} cardInfo={cardInfo} />
+<CardModal 
+  isOpen={open} 
+  onClose={handleClose} 
+  cardInfo={cardInfo} 
+  cardAddedToDeck={cardAddedToDeck} 
+  setCardAddedToDeck={setCardAddedToDeck} 
+  deck={deck}
+  setDeck={setDeck}
+/>
   );
 
   //   const DialogDisplay = (
@@ -162,8 +171,6 @@ const Cards = ({ cardInfo, index, cardAddedToDeck, setCardAddedToDeck  }) => {
     <GridItem>
       <div
         className="card"
-        cardAddedToDeck={cardAddedToDeck}
-        setCardAddedToDeck={setCardAddedToDeck}
         onMouseOver={() => setHovering(true)}
         onMouseOut={() => setHovering(false)}
       >
