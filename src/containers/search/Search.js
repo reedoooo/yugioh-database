@@ -8,6 +8,7 @@ import {
   // Text,
   FormLabel,
   Button,
+  extendTheme,
   // GridItem,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -36,30 +37,21 @@ const Search = ({
   const [type, setType] = useState("");
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
-  //   const cards = useSelector((state) => state.cards);
-  // const [cards, setCards] = useState([]); // local state for cards
 
-  //   const request = async () => {
-  //     try {
-  //       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
-  //       setCards(response.data);
-  //     } catch (err) {
-  //       alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
-  //     }
-  //   };
-
-  //   const queryBuilder = () => {
-  //     const params = [
-  //       name && `${name}`,
-  //       race && `race=${race}`,
-  //       type && `type=${type}`,
-  //       level && `level=${level}`,
-  //       attribute && `attribute=${attribute}`
-  //     ].filter(Boolean).join('&');
-
-  //     return params;
-  //   };
-
+  const theme = extendTheme({
+    shadows: {
+      outline: "0 0 0 3px #FBD38D",
+      md: "8px 0 10px -5px rgba(0, 0, 0, 0.2)",
+      lg: "10px 0 15px -5px rgba(0, 0, 0, 0.2)",
+      xl: "20px 0 25px -5px rgba(0, 0, 0, 0.2)",
+    },
+    colors: {
+      gray: {
+        500: "#A0AEC0", // Adjust the shade of gray as needed
+      },
+    },
+  });
+  
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
@@ -237,7 +229,10 @@ const Search = ({
   return (
     <Box
       overflowY="scroll"
-      height="70vh"
+      height="100vh"
+      borderRadius="lg"
+      shadow={theme.shadows.xl}
+
       css={{
         "&::-webkit-scrollbar": {
           width: "8px",
