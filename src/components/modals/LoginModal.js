@@ -1,19 +1,20 @@
 import React from "react";
 import {
-  useDisclosure,
+  Box,
   Button,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
   FormControl,
   FormLabel,
   Input,
-} from "@chakra-ui/react";
-
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+} from '@chakra-ui/react';
+           
 function LoginModal(onClose, isOpen) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -25,10 +26,12 @@ function LoginModal(onClose, isOpen) {
           <FormControl>
             <FormLabel>Username</FormLabel>
             <Input placeholder="Username" />
+
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>Password</FormLabel>
+
             <Input placeholder="Password" type="password" />
           </FormControl>
         </ModalBody>
@@ -45,3 +48,4 @@ function LoginModal(onClose, isOpen) {
 }
 
 export default LoginModal;
+
