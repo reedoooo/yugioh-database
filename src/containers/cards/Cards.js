@@ -7,7 +7,7 @@ import placeholderImage from "../../assets/placeholder.png";
 import { GridItem } from "@chakra-ui/react";
 import CardModal from "../../components/modals/CardModal";
 
-const Cards = ({ cardInfo, isDraggable, index }) => {
+const Cards = ({ cardInfo, index }) => {
   //   const [isHovering, setHovering] = useState(false);
   //   const [open, setOpen] = useState(false);
   //   const dispatch = useDispatch();

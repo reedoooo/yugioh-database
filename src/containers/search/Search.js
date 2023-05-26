@@ -60,6 +60,7 @@ const Search = () => {
     try {
       let response = await axios.get(`/${queryBuilder()}`);
       console.log(response.data);
+
       setCards(response.data.data); // Update the state with the first card data
 
       if (response.data.meta.pages_remaining !== 0) {
