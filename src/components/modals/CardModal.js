@@ -8,12 +8,25 @@ import {
   ModalBody,
   Text,
   Button,
-  theme,
+  Image,
+  Stack,
+  Box,
+  Heading,
+  Flex,
+  Grid,
 } from "@chakra-ui/react";
+import {
+  FaLevelUpAlt,
+  FaShieldAlt,
+  FaRegCopy,
+  FaVenusMars,
+  FaDragon,
+  FaRegLightbulb,
+} from "react-icons/fa";
 
-theme.colors.gray = {
-  500: "#A0AEC0", // Adjust the shade of gray as needed
-};
+// theme.colors.gray = {
+//   500: "#A0AEC0", // Adjust the shade of gray as needed
+// };
 
 const CardModal = ({
   isOpen,
@@ -22,7 +35,7 @@ const CardModal = ({
   cardAddedToDeck,
   setCardAddedToDeck,
   deck,
-  setDeck
+  setDeck,
 }) => {
   // const [deck, setDeck] = useState([]);
 
@@ -49,29 +62,60 @@ const CardModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} size="2xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>{cardInfo?.name}</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text>LV: {cardInfo?.level}</Text>
-          <Text>Type: {cardInfo?.type}</Text>
-          <Text>Race: {cardInfo?.race}</Text>
-          <Text>Attribute: {cardInfo?.attribute}</Text>
-          <Text>ATK: {cardInfo?.atk}</Text>
-          <Text>DEF: {cardInfo?.def}</Text>
-          <Text>Description: {cardInfo?.desc}</Text>
-          <Button colorScheme="green" onClick={determineCardForAdd}>
-            Add to Deck
-          </Button>
-          <Button colorScheme="red" onClick={determineCardForRemove}>
-            Remove
-          </Button>
-
-          {cardInfo?.card_images[0]?.image_url_small && (
-            <img src={cardInfo.card_images[0].image_url_small} alt="Card" />
-          )}
+          <Grid templateColumns="repeat(2, 1fr)" gap={6}>
+            <Stack spacing={3}>
+              <Image
+                src={cardInfo?.card_images[0]?.image_url_small}
+                alt="Card"
+                boxSize="300px"
+                objectFit="cover"
+                fallbackSrc="https://via.placeholder.com/300"
+              />
+              <Button colorScheme="green" onClick={determineCardForAdd}>
+                Add to Deck
+              </Button>
+              <Button colorScheme="red" onClick={determineCardForRemove}>
+                Remove
+              </Button>
+            </Stack>
+            <Stack spacing={3}>
+              <Flex align="center">
+                <Box as={FaLevelUpAlt} size="24px" />
+                <Heading size="md">Level: {cardInfo?.level}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box as={FaVenusMars} size="24px" />
+                <Heading size="md">Type: {cardInfo?.type}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box as={FaDragon} size="24px" />
+                <Heading size="md">Race: {cardInfo?.race}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box as={FaRegLightbulb} size="24px" />
+                <Heading size="md">Attribute: {cardInfo?.attribute}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box size="24px" />
+                <Heading size="md">ATK: {cardInfo?.atk}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box as={FaShieldAlt} size="24px" />
+                <Heading size="md">DEF: {cardInfo?.def}</Heading>
+              </Flex>
+              <Flex align="center">
+                <Box as={FaRegCopy} size="24px" />
+                <Heading size="md">Description:</Heading>
+              </Flex>
+              <Text>{cardInfo?.desc}</Text>
+            </Stack>
+          </Grid>
         </ModalBody>
       </ModalContent>
     </Modal>
