@@ -18,12 +18,18 @@ import "./search.css";
 import { useDispatch } from "react-redux";
 import Cards from "../cards/Cards";
 
-
 var axios = Axios.create({
   baseURL: "https://db.ygoprodeck.com/api/v7/",
 });
 
-const Search = ({ cards, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
+const Search = ({
+  cards,
+  setCards,
+  cardAddedToDeck,
+  setCardAddedToDeck,
+  deck,
+  setDeck,
+}) => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
@@ -33,28 +39,27 @@ const Search = ({ cards, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
   //   const cards = useSelector((state) => state.cards);
   // const [cards, setCards] = useState([]); // local state for cards
 
-//   const request = async () => {
-//     try {
-//       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
-//       setCards(response.data);
-//     } catch (err) {
-//       alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
-//     }
-//   };
-  
-//   const queryBuilder = () => {
-//     const params = [
-//       name && `${name}`,
-//       race && `race=${race}`,
-//       type && `type=${type}`,
-//       level && `level=${level}`,
-//       attribute && `attribute=${attribute}`
-//     ].filter(Boolean).join('&');
-  
-//     return params;
-//   };
-  
-  
+  //   const request = async () => {
+  //     try {
+  //       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
+  //       setCards(response.data);
+  //     } catch (err) {
+  //       alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
+  //     }
+  //   };
+
+  //   const queryBuilder = () => {
+  //     const params = [
+  //       name && `${name}`,
+  //       race && `race=${race}`,
+  //       type && `type=${type}`,
+  //       level && `level=${level}`,
+  //       attribute && `attribute=${attribute}`
+  //     ].filter(Boolean).join('&');
+
+  //     return params;
+  //   };
+
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
@@ -276,14 +281,16 @@ const Search = ({ cards, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
             cards.map((card, index) => {
               if (index < cards.length - 1) {
                 return (
-                    <Cards
-                      cardAddedToDeck={cardAddedToDeck}
-                      setCardAddedToDeck={setCardAddedToDeck}
-                      key={index}
-                      cardInfo={cards[index + 1]}
-                      // savedCardsData={savedCardsData[index + 1]}
-                      index={index}
-                    />
+                  <Cards
+                    cardAddedToDeck={cardAddedToDeck}
+                    setCardAddedToDeck={setCardAddedToDeck}
+                    key={index}
+                    deck={deck}
+                    setDeck={setDeck}
+                    cardInfo={cards[index + 1]}
+                    // savedCardsData={savedCardsData[index + 1]}
+                    index={index}
+                  />
                 );
               }
               return null;

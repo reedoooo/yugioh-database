@@ -1,45 +1,47 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import "./deck.css";
 import Cards from "../../containers/cards/Cards";
 
-const Deck = ({ cardInfo, setCards, cardAddedToDeck, setCardAddedToDeck }) => {
-  const dispatch = useDispatch();
+const Deck = ({ deck, setDeck }) => {
 
   // Safe access using optional chaining and nullish coalescing operator
-  const safeCardInfo = cardInfo ?? [];
-  const safeSetCards = setCards ?? (() => {});
-  const safeCardAddedToDeck = cardAddedToDeck ?? {};
-  const safeSetCardAddedToDeck = setCardAddedToDeck ?? (() => {});
+  const safeDeck = deck ?? [];
+  const safeSetDeck = setDeck ?? (() => {});
+
+  if (safeDeck.length === 0) {
+    return (
+      <div className="deck-container">
+        <div className="deck">
+          <h1>Deck</h1>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="deck-container">
       <div className="deck">
         <div>
-        {safeCardInfo.map((card, index) => {
-          if (index < safeCardInfo.length - 1) {
+          {safeDeck.map((card, index) => {
             return (
-                <Cards
-                  cardAddedToDeck={safeCardAddedToDeck}
-                  setCardAddedToDeck={safeSetCardAddedToDeck}
-                  key={index}
-                  cardInfo={safeCardInfo[index + 1]}
-                  // savedCardsData={savedCardsData[index + 1]}
-                  index={index}
-                />
+              <Cards
+                key={index}
+                cardInfo={card}
+                deck={safeDeck}
+                setDeck={safeSetDeck}
+                index={index}
+              />
             );
-          }
-          return null;
-        })}
+          })}
         </div>
+        {/* Uncomment the extra_deck mapping code if needed in the future */}
         {/* <div>
           {extra_deck.map((card, index) => (
             <Cards
-              cardAddedToDeck={cardAddedToDeck}
-              setCardAddedToDeck={setCardAddedToDeck}
               key={index}
               cardInfo={cards[index + 1]}
-              // savedCardsData={savedCardsData[index + 1]}
+              deck={safeDeck}
+              setDeck={safeSetDeck}
               index={index}
             />
           ))}
