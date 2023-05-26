@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Grid, Box, ChakraProvider } from "@chakra-ui/react";
 import { extendTheme } from "@chakra-ui/react";
 import Search from "../../containers/search/Search";
 // import Login from "../../containers/login/Login";
 import Navbar from "../../containers/navbar/Navbar";
 // import LoginModal from "../../components/modals/LoginModal";
-// import Deck from "../../containers/deck/Deck";
+import Deck from "../../containers/deck/Deck";
 
 const theme = extendTheme({
   colors: {
@@ -16,6 +16,9 @@ const theme = extendTheme({
 });
 
 function Home() {
+  const [cards, setCards] = useState([]); // local state for cards
+  const [cardAddedToDeck, setCardAddedToDeck] = useState(false);
+
   return (
     <ChakraProvider theme={theme}>
       <Grid h="100vh" templateRows="1fr 9fr" templateColumns="1fr 1fr 1fr 1fr">
@@ -26,7 +29,7 @@ function Home() {
           <Navbar />
         </Box>
         <Box gridRow="2" gridColumn="1" bg="gray.400" overflowY="auto">
-          <Search />
+          <Search cards={cards} setCards={setCards} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} />
         </Box>
         <Box
           gridRow="2"
@@ -35,7 +38,7 @@ function Home() {
           gridColumnEnd={5}
           bg="gray.600"
         >
-          {/* <Deck /> */}
+          <Deck cardInfo={cards} setCards={setCards} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} />
         </Box>
       </Grid>
     </ChakraProvider>
