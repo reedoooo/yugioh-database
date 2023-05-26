@@ -17,7 +17,8 @@ const theme = extendTheme({
 
 function Home() {
   const [cards, setCards] = useState([]); // local state for cards
-  const [cardAddedToDeck, setCardAddedToDeck] = useState(false);
+  const [cardAddedToDeck, setCardAddedToDeck] = useState(null);
+  const [deck, setDeck] = useState([]);
 
   return (
     <ChakraProvider theme={theme}>
@@ -29,7 +30,7 @@ function Home() {
           <Navbar />
         </Box>
         <Box gridRow="2" gridColumn="1" bg="gray.400" overflowY="auto">
-          <Search cards={cards} setCards={setCards} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} />
+          <Search cards={cards} setCards={setCards} deck={deck} setDeck={setDeck} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} />
         </Box>
         <Box
           gridRow="2"
@@ -38,7 +39,7 @@ function Home() {
           gridColumnEnd={5}
           bg="gray.600"
         >
-          <Deck cardInfo={cards} setCards={setCards} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} />
+          <Deck cardInfo={cards} setCards={setCards} cardAddedToDeck={cardAddedToDeck} setCardAddedToDeck={setCardAddedToDeck} deck={deck} setDeck={setDeck} />
         </Box>
       </Grid>
     </ChakraProvider>
