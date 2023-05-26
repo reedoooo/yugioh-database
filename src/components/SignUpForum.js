@@ -19,7 +19,6 @@ import { UserContext } from "../context/UserContext";
 function SignUpForum() {
   const [recentActivity, setRecentActivity] = useState([]);
   const [selectedThread, setSelectedThread] = useState(null);
-  // const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
   const { user } = useContext(UserContext); // Update the user state using the setUser function
 
   const { isOpen, onOpen, onClose } = useDisclosure();
