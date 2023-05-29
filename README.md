@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-# yugioh-database
-=======
+
 # yugioh-database
 
 ## Project: Yugioh Deck Builder
@@ -61,5 +59,4 @@ Reed Vogt and Ryan Eastman
 
 #### UML
 
-[Website Blockframe]()
->>>>>>> work
+[Website Blockframe](https://github.com/reedoooo/yugioh-database/blob/4d2bd15f4b82fc80fa8a0ceebf1331069f6ddc64/Website%20blockframe%20example.jpeg)
