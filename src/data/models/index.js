@@ -25,37 +25,4 @@ module.exports = {
   decks: decks,
 };
 
-// "use strict";
-
-// const { Sequelize, DataTypes } = require("sequelize");
-// const cardModel = require("./cards/model.js");
-// const deckModel = require("./decks/model.js");
-// const Collection = require("./data-collection.js");
-
-// const DATABASE_URL = process.env.DATABASE_URL || "sqlite:memory:";
-
-// const sequelize = new Sequelize(DATABASE_URL);
-
-// const models = {
-//   Deck: deckModel(sequelize, DataTypes),
-//   Card: cardModel(sequelize, DataTypes),
-// };
-
-// Object.keys(models).forEach(modelName => {
-//   if ('associate' in models[modelName]) {
-//     models[modelName].associate(models);
-//   }
-// });
-
-
-// // Instantiate the collections
-// const cards = new Collection(models.Card);
-// const decks = new Collection(models.Deck);
-
-// module.exports = {
-//   cardAndDecksDB: sequelize,
-//   cards: cards,
-//   decks: decks,
-// };
-
 

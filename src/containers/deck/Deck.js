@@ -1,21 +1,13 @@
-<<<<<<< HEAD
 import React, { useEffect, useState } from "react";
 import { Button, Box, Heading, Grid, VStack, Icon } from "@chakra-ui/react";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import axios from "axios";
 import Cards from "../cards/Cards";
-=======
-import React, { useState } from "react";
-import DeckFetcher from "../../components/deck/DeckFetcher";
-import DeckForm from "../../components/deck/DeckForm";
-import DeckDisplay from "../../components/deck/DeckDisplay";
->>>>>>> work
 
 const Deck = ({ deck, setDeck }) => {
   const safeDeck = deck ?? [];
   const safeSetDeck = setDeck ?? (() => {});
 
-<<<<<<< HEAD
   const [deckData, setDeckData] = useState([]); // new state for fetched deck data
   const [deckOptions, setDeckOptions] = useState([]);
   const [hideTitle, setHideTitle] = useState(false);
@@ -315,18 +307,6 @@ const Deck = ({ deck, setDeck }) => {
         </Button> */}
       </VStack>
     </Box>
-=======
-  const [deckData, setDeckData] = useState([]);
-  const [deckOptions, setDeckOptions] = useState([]);
-  const [hideTitle, setHideTitle] = useState(false);
-
-  return (
-    <>
-      <DeckFetcher setDeckData={setDeckData} setDeckOptions={setDeckOptions} />
-      <DeckForm safeDeck={safeDeck} setDeckData={setDeckData} deckData={deckData} deck={deck} />
-      <DeckDisplay safeDeck={safeDeck} setDeck={safeSetDeck} deckOptions={deckOptions} deckData={deckData} />
-    </>
->>>>>>> work
   );
 };
 
