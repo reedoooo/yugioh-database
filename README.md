@@ -14,7 +14,7 @@ The Yugioh Deck Builder app aims to provide a platform for Yugioh players to eas
 - [Github Repository](http://xyz.com) (when applicable)
 - [back-end Server Repository](http://xyz.com) (when applicable)
 - [Deployed Application](http://xyz.com) (when applicable)
-- [GitHub Actions ci/cd](https://github.com/rkgallaway/server-deployment-practice-d51/actions) 
+- [GitHub Actions ci/cd](https://github.com/rkgallaway/server-deployment-practice-d51/actions)
 
 ### Collaborators
 
@@ -28,7 +28,7 @@ Reed Vogt and Ryan Eastman
 
 #### How to initialize/run your application (where applicable)
 
-- Clone the repository: git clone https://github.com/your-username/yugioh-deck-builder.git
+- Clone the repository: git clone [https://github.com/your-username/yugioh-deck-builder.git]
 - Navigate to the project directory: cd yugioh-deck-builder
 - Install dependencies: npm install
 - Start the application: npm start

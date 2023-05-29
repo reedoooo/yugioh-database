@@ -9,7 +9,7 @@ const Deck = ({ deck, setDeck }) => {
 
   const [deckData, setDeckData] = useState([]);
   const [deckOptions, setDeckOptions] = useState([]);
-  const [hideTitle, setHideTitle] = useState(false);
+  // const [hideTitle, setHideTitle] = useState(false);
 
   return (
     <>
