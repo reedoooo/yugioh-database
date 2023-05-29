@@ -8,6 +8,8 @@ import { GridItem } from "@chakra-ui/react";
 import CardModal from "../../components/modals/CardModal";
 
 const Cards = ({
+  setSearchName,
+  searchName,
   cardInfo,
   cardAddedToDeck,
   setCardAddedToDeck,
