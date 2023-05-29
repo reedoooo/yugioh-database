@@ -59,11 +59,9 @@ bower_components
 build/Release
 
 # Dependency directories
-# node_modules/
-# jspm_packages/
-# node_modules/.cache/default-development/10.pack
-# node_modules/.cache/default-development/15.pack
-# node_modules/.cache/default-development/1.pack
+jspm_packages/
+node_modules/
+
 
 # Typescript v1 declaration files
 typings/
