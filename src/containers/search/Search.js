@@ -8,7 +8,10 @@ import {
   // Text,
   FormLabel,
   Button,
+<<<<<<< HEAD
   // extendTheme,
+=======
+>>>>>>> 5a1ff5db (this is actualy dev 1 since dev 1 didnt save)
   // GridItem,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
@@ -23,6 +26,7 @@ var axios = Axios.create({
   baseURL: "https://db.ygoprodeck.com/api/v7/",
 });
 
+<<<<<<< HEAD
 const Search = ({
   cards,
   setCards,
@@ -31,6 +35,13 @@ const Search = ({
   deck,
   setDeck,
 }) => {
+=======
+var axios = Axios.create({
+  baseURL: "https://db.ygoprodeck.com/api/v7/",
+});
+
+const Search = () => {
+>>>>>>> 5a1ff5db (this is actualy dev 1 since dev 1 didnt save)
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
@@ -38,12 +49,38 @@ const Search = ({
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
 
+//   const request = async () => {
+//     try {
+//       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
+//       setCards(response.data);
+//     } catch (err) {
+//       alert(`I'm sorry, something went wrong =(.\n Change the parameters and try again`);
+//     }
+//   };
+  
+//   const queryBuilder = () => {
+//     const params = [
+//       name && `${name}`,
+//       race && `race=${race}`,
+//       type && `type=${type}`,
+//       level && `level=${level}`,
+//       attribute && `attribute=${attribute}`
+//     ].filter(Boolean).join('&');
+  
+//     return params;
+//   };
+  
+  
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
       let response = await axios.get(`/${queryBuilder()}`);
+<<<<<<< HEAD
       // console.log(response.data);
 
+=======
+      console.log(response.data);
+>>>>>>> 5a1ff5db (this is actualy dev 1 since dev 1 didnt save)
       setCards(response.data.data); // Update the state with the first card data
 
       if (response.data.meta.pages_remaining !== 0) {
@@ -68,6 +105,7 @@ const Search = ({
   const queryBuilder = () => {
     return `cardinfo.php?` + name + race + type + level + attribute;
   };
+<<<<<<< HEAD
 
   // console.log(cards);
 
@@ -75,6 +113,8 @@ const Search = ({
     try {
       let response = await axios.get(`/${queryBuilder()}`);
       console.log(response.data);
+=======
+>>>>>>> 5a1ff5db (this is actualy dev 1 since dev 1 didnt save)
 
       // setCards(response.data.data); // Update the state with the card data
     } catch (err) {
