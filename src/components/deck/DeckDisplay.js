@@ -1,4 +1,4 @@
-import { Box, Grid, Icon, Button } from "@chakra-ui/react";
+import { Box, Grid, Icon } from "@chakra-ui/react";
 import { RiCheckboxBlankCircleLine } from "react-icons/ri";
 import Cards from "../../containers/cards/Cards";
 
