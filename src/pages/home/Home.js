@@ -3,12 +3,8 @@ import { Grid, Box } from "@chakra-ui/react";
 import Search from "../../containers/search/Search";
 import Navbar from "../../containers/navbar/Navbar";
 import Deck from "../../containers/deck/Deck";
-<<<<<<< HEAD
-=======
 // import Deck from "../../containers/deck/Deck";
 
-
->>>>>>> work
 
 function Home() {
   const [cards, setCards] = useState([]); // local state for cards
