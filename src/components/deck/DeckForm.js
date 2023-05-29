@@ -4,7 +4,6 @@ import axios from "axios";
 import {
     // remove Button from here
     Button,
-    // add MotionButton from here
     
     VStack,
     FormControl,
@@ -15,7 +14,6 @@ import {
     Spinner,
     Box,
     useDisclosure,
-    position,
   } from "@chakra-ui/react";
   // ...
 import DOMPurify from "dompurify";
@@ -40,7 +38,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [author, setAuthor] = useState("");
-  const [userID, setUserID] = useState("");
+  // const [userID, setUserID] = useState("");
   const [nameError, setNameError] = useState("");
   const [authorError, setAuthorError] = useState("");
   const [deckNameToDelete, setDeckNameToDelete] = useState("");
@@ -61,7 +59,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
         name: name,
         description: sanitizedDescription,
         author: author,
-        userID: userID,
+        // userID: userID,
         cards: safeDeck.map((card) => ({
           id: card.id,
           name: card.name,
@@ -238,6 +236,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
               </UpdateDeckButton>
 
               <DeleteDeckButton
+              setDeckNameToDelete={setDeckNameToDelete}
                 onClick={() => handleDeleteDeckByName(deckNameToDelete)}
                 whileHover={buttonVariants.hover}
                 style={{
