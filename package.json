@@ -12,6 +12,10 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.4.0",
+<<<<<<< HEAD
+=======
+    "dompurify": "^3.0.3",
+>>>>>>> work
     "dotenv": "^16.0.3",
     "framer-motion": "^10.12.16",
     "nodemon": "^2.0.22",
@@ -40,7 +44,10 @@
       "react-app/jest"
     ]
   },
+<<<<<<< HEAD
   "proxy": "https://db.ygoprodeck.com/api/v7/",
+=======
+>>>>>>> work
   "browserslist": {
     "production": [
       ">0.2%",

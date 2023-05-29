@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Box,
   Input,
@@ -23,6 +24,17 @@ var axios = Axios.create({
   baseURL: "https://db.ygoprodeck.com/api/v7/",
 });
 
+=======
+import { Button } from "@chakra-ui/button";
+import { Input } from "@chakra-ui/input";
+import { Box, SimpleGrid, VStack } from "@chakra-ui/layout";
+import { Select } from "@chakra-ui/select";
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import Cards from "../cards/Cards";
+
+>>>>>>> work
 const Search = ({
   cards,
   setCards,
@@ -31,6 +43,7 @@ const Search = ({
   deck,
   setDeck,
 }) => {
+<<<<<<< HEAD
 
 var axios = Axios.create({
   baseURL: "https://db.ygoprodeck.com/api/v7/",
@@ -38,6 +51,8 @@ var axios = Axios.create({
 
 const Search = () => {
 
+=======
+>>>>>>> work
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [race, setRace] = useState("");
@@ -45,6 +60,7 @@ const Search = () => {
   const [attribute, setAttribute] = useState("");
   const [level, setLevel] = useState("");
 
+<<<<<<< HEAD
 //   const request = async () => {
 //     try {
 //       const response = await axios.get(`${process.env.REACT_APP_SERVER}/api/v7?${queryBuilder()}`);
@@ -117,15 +133,58 @@ const Search = () => {
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleSearch();
+=======
+  const request = async () => {
+    dispatch({ type: "SET_LOADING_STATE", payload: true });
+    try {
+      // http://localhost:3001/api/v1/decks
+      const response = await axios.post("http://localhost:3001/api/v7", { 
+        name: name, 
+        race: race, 
+        type: type, 
+        level: level, 
+        attribute: attribute 
+      });
+      console.log(response.data);
+      
+      setCards(response.data.data); // Update the state with the first card data
+
+
+    } catch (err) {
+      console.log(err);
+      dispatch({ type: "SET_LOADING_STATE", payload: false });
+    }
+  };
+
+  // const handleSearch = async () => {
+  //   try {
+  //     const response = await axios.get("/api/v7", { params: { name, race, type, level, attribute } });
+  //     console.log(response.data);
+
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      request();
+>>>>>>> work
     }
   };
 
   const levelSelector = (
     <>
+<<<<<<< HEAD
       <FormLabel>Level</FormLabel>
       <Select
         onChange={({ target: { value } }) =>
           setLevel(value.toLowerCase() === "unset" ? "" : `&level=${value}`)
+=======
+      <Select
+        onChange={({ target: { value } }) =>
+          setLevel(value.toLowerCase() === "unset" ? "" : `${value}`)
+>>>>>>> work
         }
       >
         <option defaultChecked={true}>Unset</option>
@@ -150,7 +209,11 @@ const Search = () => {
       <Select
         placeholder="Select option"
         onChange={({ target: { value } }) =>
+<<<<<<< HEAD
           setRace(value.toLowerCase() === "unset" ? "" : `&race=${value}`)
+=======
+          setRace(value.toLowerCase() === "unset" ? "" : `${value}`)
+>>>>>>> work
         }
       >
         <option>Unset</option>
@@ -200,7 +263,11 @@ const Search = () => {
     <>
       <Select
         onChange={({ target: { value } }) =>
+<<<<<<< HEAD
           setType(value.toLowerCase() === "unset" ? "" : `&type=${value}`)
+=======
+          setType(value.toLowerCase() === "unset" ? "" : `${value}`)
+>>>>>>> work
         }
       >
         <option>Unset</option>
@@ -244,7 +311,11 @@ const Search = () => {
       <Select
         onChange={({ target: { value } }) =>
           setAttribute(
+<<<<<<< HEAD
             value.toLowerCase() === "unset" ? "" : `&attribute=${value}`
+=======
+            value.toLowerCase() === "unset" ? "" : `${value}`
+>>>>>>> work
           )
         }
       >
@@ -280,10 +351,17 @@ const Search = () => {
       }}
     >
       <VStack padding="5" spacing="5">
+<<<<<<< HEAD
         <Input
           type="text"
           placeholder="Type card name"
           onChange={(event) => setName(`&fname=${event.target.value}`)}
+=======
+      <Input
+          type="text"
+          placeholder="Type card name"
+          onChange={(event) => setName(event.target.value)}
+>>>>>>> work
           onKeyDown={handleKeyDown}
         />
         <VStack spacing={3}>{levelSelector}</VStack>
@@ -294,9 +372,13 @@ const Search = () => {
 
         <Button
           className="search-button"
+<<<<<<< HEAD
           onClick={() => {
             request();
           }}
+=======
+          onClick={request}
+>>>>>>> work
         >
           Search
         </Button>
@@ -309,6 +391,10 @@ const Search = () => {
                   <Cards
                     cardAddedToDeck={cardAddedToDeck}
                     setCardAddedToDeck={setCardAddedToDeck}
+<<<<<<< HEAD
+=======
+
+>>>>>>> work
                     key={index}
                     deck={deck}
                     setDeck={setDeck}
