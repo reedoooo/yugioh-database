@@ -42,7 +42,7 @@ const Search = ({
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
       let response = await axios.get(`/${queryBuilder()}`);
-      console.log(response.data);
+      // console.log(response.data);
 
       setCards(response.data.data); // Update the state with the first card data
 
@@ -69,14 +69,14 @@ const Search = ({
     return `cardinfo.php?` + name + race + type + level + attribute;
   };
 
-  console.log(cards);
+  // console.log(cards);
 
   const handleSearch = async () => {
     try {
       let response = await axios.get(`/${queryBuilder()}`);
       console.log(response.data);
 
-      setCards(response.data.data); // Update the state with the card data
+      // setCards(response.data.data); // Update the state with the card data
     } catch (err) {
       console.log(err);
     }
