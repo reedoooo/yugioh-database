@@ -1,27 +1,11 @@
-import {
-  Box,
-  Input,
-  Select,
-  SimpleGrid,
-  // Image,
-  VStack,
-  // Text,
-  FormLabel,
-  Button,
-  // extendTheme,
-  // GridItem,
-} from "@chakra-ui/react";
-import React, { useState } from "react";
-import { default as Axios } from "axios";
-// import axios from "axios";
-import "./search.css";
-// import { useSelector } from "react-redux";
+import { Button } from "@chakra-ui/button";
+import { Input } from "@chakra-ui/input";
+import { Box, SimpleGrid, VStack } from "@chakra-ui/layout";
+import { Select } from "@chakra-ui/select";
+import axios from "axios";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Cards from "../cards/Cards";
-
-var axios = Axios.create({
-  baseURL: "https://db.ygoprodeck.com/api/v7/",
-});
 
 const Search = ({
   cards,
@@ -41,59 +25,46 @@ const Search = ({
   const request = async () => {
     dispatch({ type: "SET_LOADING_STATE", payload: true });
     try {
-      let response = await axios.get(`/${queryBuilder()}`);
+      // http://localhost:3001/api/v1/decks
+      const response = await axios.post("http://localhost:3001/api/v7", { 
+        name: name, 
+        race: race, 
+        type: type, 
+        level: level, 
+        attribute: attribute 
+      });
       console.log(response.data);
-
+      
       setCards(response.data.data); // Update the state with the first card data
 
-      if (response.data.meta.pages_remaining !== 0) {
-        dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: true });
-        dispatch({
-          type: "SET_NEXT_PAGE_TO_LOAD",
-          payload: response.data.meta.next_page,
-        });
-      } else {
-        dispatch({ type: "SET_HAS_MORE_ITEMS_TO_LOAD", payload: false });
-      }
-      dispatch({ type: "UPDATE_LISTER", payload: response.data.data });
-      dispatch({ type: "SET_LOADING_STATE", payload: false });
-    } catch (err) {
-      alert(
-        `I-i'm sorry, something just gone wrong =(.\n Change the parameters and try again`
-      );
-      dispatch({ type: "SET_LOADING_STATE", payload: false });
-    }
-  };
 
-  const queryBuilder = () => {
-    return `cardinfo.php?` + name + race + type + level + attribute;
-  };
-
-  console.log(cards);
-
-  const handleSearch = async () => {
-    try {
-      let response = await axios.get(`/${queryBuilder()}`);
-      console.log(response.data);
-
-      setCards(response.data.data); // Update the state with the card data
     } catch (err) {
       console.log(err);
+      dispatch({ type: "SET_LOADING_STATE", payload: false });
     }
   };
+
+  // const handleSearch = async () => {
+  //   try {
+  //     const response = await axios.get("/api/v7", { params: { name, race, type, level, attribute } });
+  //     console.log(response.data);
+
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      handleSearch();
+      request();
     }
   };
 
   const levelSelector = (
     <>
-      <FormLabel>Level</FormLabel>
       <Select
         onChange={({ target: { value } }) =>
-          setLevel(value.toLowerCase() === "unset" ? "" : `&level=${value}`)
+          setLevel(value.toLowerCase() === "unset" ? "" : `${value}`)
         }
       >
         <option defaultChecked={true}>Unset</option>
@@ -118,7 +89,7 @@ const Search = ({
       <Select
         placeholder="Select option"
         onChange={({ target: { value } }) =>
-          setRace(value.toLowerCase() === "unset" ? "" : `&race=${value}`)
+          setRace(value.toLowerCase() === "unset" ? "" : `${value}`)
         }
       >
         <option>Unset</option>
@@ -168,7 +139,7 @@ const Search = ({
     <>
       <Select
         onChange={({ target: { value } }) =>
-          setType(value.toLowerCase() === "unset" ? "" : `&type=${value}`)
+          setType(value.toLowerCase() === "unset" ? "" : `${value}`)
         }
       >
         <option>Unset</option>
@@ -212,7 +183,7 @@ const Search = ({
       <Select
         onChange={({ target: { value } }) =>
           setAttribute(
-            value.toLowerCase() === "unset" ? "" : `&attribute=${value}`
+            value.toLowerCase() === "unset" ? "" : `${value}`
           )
         }
       >
@@ -245,18 +216,13 @@ const Search = ({
           backgroundColor: "gray.500",
           borderRadius: "20px",
         },
-        // backgroundImage: "url(../../assets/deckBuilderLogo.png)",
-        // backgroundSize: "cover",
-        // backgroundPosition: "center",
-        // backgroundRepeat: "no-repeat",
-
       }}
     >
       <VStack padding="5" spacing="5">
-        <Input
+      <Input
           type="text"
           placeholder="Type card name"
-          onChange={(event) => setName(`&fname=${event.target.value}`)}
+          onChange={(event) => setName(event.target.value)}
           onKeyDown={handleKeyDown}
         />
         <VStack spacing={3}>{levelSelector}</VStack>
@@ -267,9 +233,7 @@ const Search = ({
 
         <Button
           className="search-button"
-          onClick={() => {
-            request();
-          }}
+          onClick={request}
         >
           Search
         </Button>
@@ -282,6 +246,7 @@ const Search = ({
                   <Cards
                     cardAddedToDeck={cardAddedToDeck}
                     setCardAddedToDeck={setCardAddedToDeck}
+
                     key={index}
                     deck={deck}
                     setDeck={setDeck}

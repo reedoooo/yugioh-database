@@ -95,9 +95,9 @@ const NavBar = () => {
         </Flex>
 
         {/* Centered Logo */}
-        <Box flex="1" textAlign="center">
+        {/* <Box flex="1" textAlign="center">
           <img src="../../public/deckBuilderLogo.png" alt="Logo" />
-        </Box>
+        </Box> */}
 
         <Box ml="auto">
           <Menu>
