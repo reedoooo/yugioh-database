@@ -13,7 +13,8 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import {UserContext} from '../../context/UserContext';
-
+import config from '../../config';
+const apiUrl = config.apiUrl;
 function LoginModal({onClose, isOpen}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +27,7 @@ function LoginModal({onClose, isOpen}) {
 
   const signIn = async () => {
     try {
-      const data = await fetch('http://localhost:3001/signin', { // updated here
+      const data = await fetch(`${apiUrl}/signin`, { // updated here
         method: 'POST',
         headers: {
           'Authorization': 'Basic ' + btoa(username + ':' + password),

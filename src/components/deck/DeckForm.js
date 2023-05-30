@@ -17,7 +17,8 @@ import {
 import DOMPurify from 'dompurify';
 import {AnimatePresence, motion} from 'framer-motion';
 import {useState} from 'react';
-
+import config from '../../config';
+const apiUrl = config.apiUrl;
 const MotionBox = motion(Box);
 // Framer motion variants for button
 const buttonVariants = {
@@ -76,7 +77,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
       };
 
       const response = await axios.post(
-          'http://localhost:3001/api/v1/decks',
+          `${apiUrl}/api/v1/decks`,
           newDeck,
       );
       console.log('handleSaveDeck', response.data);
@@ -98,7 +99,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
         cards: safeDeck.map((card) => card.name),
       };
       const response = await axios.put(
-          `http://localhost:3001/api/v1/decks/${deckId}`,
+          `${apiUrl}/api/v1/decks/${deckId}`,
           updatedDeck,
       );
 
@@ -121,7 +122,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
     try {
       setIsLoading(true);
       await axios.delete(
-          `http://localhost:3001/api/v1/decks/${deckToDelete.id}`,
+          `${apiUrl}/api/v1/decks/${deckToDelete.id}`,
       );
       setDeckData(deckData.filter((deck) => deck.id !== deckToDelete.id));
     } catch (error) {
