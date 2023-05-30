@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useEffect} from 'react';
 import config from '../../config';
 const apiUrl = config.apiUrl;
-const DeckFetcher = ({setDeckData, setDeckOptions}) => {
+const DeckFetcher = ({setDeckData, deckData, setDeckOptions}) => {
   useEffect(() => {
     const fetchDeck = async () => {
       try {

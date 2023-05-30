@@ -9,7 +9,10 @@ import {useState} from 'react';
 function Home() {
   const [cards, setCards] = useState([]); // local state for cards
   const [cardAddedToDeck, setCardAddedToDeck] = useState(null);
+  // const [loadDeck, setLoadDeck] = useState({}); // local state for deck
+  const [deckCards, setDeckCards] = useState([]); // local state for deck
   const [deck, setDeck] = useState([]);
+  const [currentlyEditingDeck, setCurrentlyEditingDeck] = useState(false);
 
   return (
     <Grid h="100vh" templateRows="1fr 9fr" templateColumns="25px 1fr 1fr 1fr">
@@ -27,9 +30,13 @@ function Home() {
         top={0} // Stick it to the top of the viewport
       >
         <Search
+          deckCards={deckCards}
+          setDeckCards={setDeckCards}
           cards={cards}
           setCards={setCards}
           deck={deck}
+          currentlyEditingDeck={currentlyEditingDeck}
+          setCurrentlyEditingDeck={setCurrentlyEditingDeck}
           setDeck={setDeck}
           cardAddedToDeck={cardAddedToDeck}
           setCardAddedToDeck={setCardAddedToDeck}
@@ -38,9 +45,14 @@ function Home() {
 
       <Box gridRow="2" gridColumn="3 / -1" bg="gray.600">
         <Deck
+          deckCards={deckCards}
+          setDeckCards={setDeckCards}
           cardInfo={cards}
           setCards={setCards}
+          cards={cards}
           cardAddedToDeck={cardAddedToDeck}
+          setCurrentlyEditingDeck={setCurrentlyEditingDeck}
+          currentlyEditingDeck={currentlyEditingDeck}
           setCardAddedToDeck={setCardAddedToDeck}
           deck={deck}
           setDeck={setDeck}

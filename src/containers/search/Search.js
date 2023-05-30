@@ -13,7 +13,11 @@ const Search = ({
   cards,
   setCards,
   cardAddedToDeck,
+  deckCards,
+  setDeckCards,
   setCardAddedToDeck,
+  currentlyEditingDeck,
+  setCurrentlyEditingDeck,
   deck,
   setDeck,
 }) => {
@@ -46,9 +50,9 @@ const Search = ({
 
   // const handleSearch = async () => {
   //   try {
-  //     const response = await axios.get("/api/v7", { params: { name, race, type, level, attribute } });
-  //     console.log(response.data);
+  //     const response = await axios.get('/api/v7', {params: {name, race, type, level, attribute}});
 
+  //     console.log(response.data);
   //   } catch (err) {
   //     console.log(err);
   //   }
@@ -197,6 +201,7 @@ const Search = ({
       </Select>
     </>
   );
+  console.log(cards);
 
   return (
     <Box
@@ -235,22 +240,27 @@ const Search = ({
 
         <SimpleGrid columns={3} spacing={10}>
           {cards &&
-            cards.map((card, index) => {
-              if (index < cards.length - 1) {
-                return (
-                  <Cards
-                    cardAddedToDeck={cardAddedToDeck}
-                    setCardAddedToDeck={setCardAddedToDeck}
-                    key={index}
-                    deck={deck}
-                    setDeck={setDeck}
-                    cardInfo={cards[index + 1]}
-                    index={index}
-                  />
-                );
-              }
-              return null;
-            })}
+    cards.map((card, index) => {
+      if (index < cards.length - 1) {
+        return (
+          <Cards
+            cardAddedToDeck={cardAddedToDeck}
+            deckCards={deckCards}
+            setDeckCards={setDeckCards}
+            setCardAddedToDeck={setCardAddedToDeck}
+            setCurrentlyEditingDeck={setCurrentlyEditingDeck}
+            currentlyEditingDeck={currentlyEditingDeck}
+            cards={cards}
+            key={index}
+            deck={deck}
+            setDeck={setDeck}
+            cardInfo={cards[index + 1]}
+            index={index}
+          />
+        );
+      }
+      return null;
+    })}
         </SimpleGrid>
       </VStack>
     </Box>
