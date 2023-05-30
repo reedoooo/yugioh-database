@@ -1,31 +1,30 @@
-import { useState } from "react";
-import axios from "axios";
+// import React { useState } from 'react';
+import axios from 'axios';
 // import Button from Chakra UI
 import {
-    // remove Button from here
-    Button,
-    
-    VStack,
-    FormControl,
-    FormLabel,
-    Input,
-    Textarea,
-    FormErrorMessage,
-    Spinner,
-    Box,
-    useDisclosure,
-  } from "@chakra-ui/react";
-  // ...
-import DOMPurify from "dompurify";
-import { AnimatePresence, motion } from "framer-motion";
+  Button,
+  VStack,
+  FormControl,
+  FormLabel,
+  Input,
+  Textarea,
+  FormErrorMessage,
+  Spinner,
+  Box,
+  useDisclosure,
+} from '@chakra-ui/react';
+// ...
+import DOMPurify from 'dompurify';
+import {AnimatePresence, motion} from 'framer-motion';
+import {useState} from 'react';
 
 const MotionBox = motion(Box);
 // Framer motion variants for button
 const buttonVariants = {
   hover: {
     scale: 1.1,
-    textShadow: "0px 0px 8px rgb(255,255,255)",
-    boxShadow: "0px 0px 8px rgb(255,255,255)",
+    textShadow: '0px 0px 8px rgb(255,255,255)',
+    boxShadow: '0px 0px 8px rgb(255,255,255)',
     transition: {
       duration: 0.3,
       yoyo: Infinity,
@@ -34,21 +33,21 @@ const buttonVariants = {
 };
 
 // Replace the Chakra UI Button with a motion component
-const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [author, setAuthor] = useState("");
+const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [author, setAuthor] = useState('');
   // const [userID, setUserID] = useState("");
-  const [nameError, setNameError] = useState("");
-  const [authorError, setAuthorError] = useState("");
-  const [deckNameToDelete, setDeckNameToDelete] = useState("");
+  const [nameError, setNameError] = useState('');
+  const [authorError, setAuthorError] = useState('');
+  const [deckNameToDelete, setDeckNameToDelete] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   const handleSaveDeck = async () => {
-    console.log("handleSaveDeck", name, author, safeDeck);
+    console.log('handleSaveDeck', name, author, safeDeck);
     if (!name || !author) {
-      console.error("Name and author fields are required");
+      console.error('Name and author fields are required');
       return;
     }
 
@@ -77,35 +76,35 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
       };
 
       const response = await axios.post(
-        "http://localhost:3001/api/v1/decks",
-        newDeck
+          'http://localhost:3001/api/v1/decks',
+          newDeck,
       );
-      console.log("handleSaveDeck", response.data);
+      console.log('handleSaveDeck', response.data);
       setDeckData([...deckData, response.data]);
-      setName("");
-      setDescription("");
-      setAuthor("");
-      setNameError("");
-      setAuthorError("");
+      setName('');
+      setDescription('');
+      setAuthor('');
+      setNameError('');
+      setAuthorError('');
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleUpdateDeck = async (deckId) => {
-    console.log("handleUpdateDeck", deckId);
+    console.log('handleUpdateDeck', deckId);
     try {
       const updatedDeck = {
         cards: safeDeck.map((card) => card.name),
       };
       const response = await axios.put(
-        `http://localhost:3001/api/v1/decks/${deckId}`,
-        updatedDeck
+          `http://localhost:3001/api/v1/decks/${deckId}`,
+          updatedDeck,
       );
 
-      console.log("handleUpdateDeck", deckId);
+      console.log('handleUpdateDeck', deckId);
       setDeckData(
-        deckData.map((deck) => (deck.id === deckId ? response.data : deck))
+          deckData.map((deck) => (deck.id === deckId ? response.data : deck)),
       );
     } catch (error) {
       console.error(error);
@@ -122,7 +121,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
     try {
       setIsLoading(true);
       await axios.delete(
-        `http://localhost:3001/api/v1/decks/${deckToDelete.id}`
+          `http://localhost:3001/api/v1/decks/${deckToDelete.id}`,
       );
       setDeckData(deckData.filter((deck) => deck.id !== deckToDelete.id));
     } catch (error) {
@@ -132,27 +131,27 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
     }
   };
   const buttonStyle = {
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "0.5em 1em",
-    fontSize: "1em",
-    borderRadius: "4px",
-    cursor: "pointer",
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '0.5em 1em',
+    fontSize: '1em',
+    borderRadius: '4px',
+    cursor: 'pointer',
     // more styles...
   };
   const formAnimation = {
-    hidden: { width: "100px", x: 50 },
+    hidden: {width: '100px', x: 50},
     visible: {
-      width: "500px",
+      width: '500px',
       x: 0,
       transition: {
-        type: "spring",
+        type: 'spring',
         stiffness: 20,
         restDelta: 2,
       },
     },
-    exit: { width: "100px", x: 50 },
+    exit: {width: '100px', x: 50},
   };
 
   // create motion buttons
@@ -163,7 +162,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
   return (
     <Box position="absolute" right="0" pr={5}>
       <Button onClick={isOpen ? onClose : onOpen} h={50} w={200}>
-        {isOpen ? "Close Form" : "Open Form"}
+        {isOpen ? 'Close Form' : 'Open Form'}
       </Button>
       <AnimatePresence>
         {isOpen && (
@@ -191,7 +190,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
-                    setNameError("");
+                    setNameError('');
                   }}
                 />
                 <FormErrorMessage>{nameError}</FormErrorMessage>
@@ -205,7 +204,7 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
                   value={author}
                   onChange={(e) => {
                     setAuthor(e.target.value);
-                    setAuthorError("");
+                    setAuthorError('');
                   }}
                 />
                 <FormErrorMessage>{authorError}</FormErrorMessage>
@@ -216,10 +215,10 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
                 whileHover={buttonVariants.hover}
                 style={{
                   ...buttonStyle,
-                  backgroundColor: isLoading ? "lightgray" : "green",
+                  backgroundColor: isLoading ? 'lightgray' : 'green',
                 }}
               >
-                {isLoading ? "Saving..." : "Save Deck"}
+                {isLoading ? 'Saving...' : 'Save Deck'}
                 {isLoading && <Spinner />}
               </SaveDeckButton>
 
@@ -228,23 +227,23 @@ const DeckForm = ({ safeDeck, setDeckData, deckData, deck }) => {
                 whileHover={buttonVariants.hover}
                 style={{
                   ...buttonStyle,
-                  backgroundColor: isLoading ? "lightgray" : "blue",
+                  backgroundColor: isLoading ? 'lightgray' : 'blue',
                 }}
               >
-                {isLoading ? "Updating..." : "Update Deck"}
+                {isLoading ? 'Updating...' : 'Update Deck'}
                 {isLoading && <Spinner />}
               </UpdateDeckButton>
 
               <DeleteDeckButton
-              setDeckNameToDelete={setDeckNameToDelete}
+                setDeckNameToDelete={setDeckNameToDelete}
                 onClick={() => handleDeleteDeckByName(deckNameToDelete)}
                 whileHover={buttonVariants.hover}
                 style={{
                   ...buttonStyle,
-                  backgroundColor: isLoading ? "lightgray" : "red",
+                  backgroundColor: isLoading ? 'lightgray' : 'red',
                 }}
               >
-                {isLoading ? "Deleting..." : "Delete Deck by Name"}
+                {isLoading ? 'Deleting...' : 'Delete Deck by Name'}
                 {isLoading && <Spinner />}
               </DeleteDeckButton>
             </VStack>

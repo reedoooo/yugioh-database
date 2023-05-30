@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import {useContext, useEffect, useState} from 'react';
 import {
   Box,
   Grid,
@@ -11,25 +11,27 @@ import {
   ModalBody,
   useDisclosure,
   Flex,
-} from "@chakra-ui/react";
-import { Carousel } from "react-responsive-carousel";
-import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { UserContext } from "../context/UserContext";
+} from '@chakra-ui/react';
+import {Carousel} from 'react-responsive-carousel';
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
+import {UserContext} from '../context/UserContext';
+
 
 function SignUpForum() {
   const [recentActivity, setRecentActivity] = useState([]);
   const [selectedThread, setSelectedThread] = useState(null);
-  const { user } = useContext(UserContext); // Update the user state using the setUser function
+  const {user} = useContext(UserContext);
+  // Update the user state using the setUser function
 
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {isOpen, onOpen, onClose} = useDisclosure();
 
   const threads = [
-    { id: 1, title: "Thread 1", replies: 10 },
-    { id: 2, title: "Thread 2", replies: 5 },
-    { id: 3, title: "Thread 3", replies: 20 },
-    { id: 4, title: "Thread 4", replies: 7 },
-    { id: 5, title: "Thread 5", replies: 15 },
-    { id: 6, title: "Thread 6", replies: 3 },
+    {id: 1, title: 'Thread 1', replies: 10},
+    {id: 2, title: 'Thread 2', replies: 5},
+    {id: 3, title: 'Thread 3', replies: 20},
+    {id: 4, title: 'Thread 4', replies: 7},
+    {id: 5, title: 'Thread 5', replies: 15},
+    {id: 6, title: 'Thread 6', replies: 3},
   ];
 
   const handleThreadClick = (thread) => {
@@ -39,27 +41,26 @@ function SignUpForum() {
 
   useEffect(() => {
     // Load recent activity from cookie on component mount
-    const cookieData = getCookie("recentActivity");
+    const cookieData = getCookie('recentActivity');
     if (cookieData) {
       setRecentActivity(JSON.parse(cookieData));
-      
     }
   }, []);
 
   useEffect(() => {
     // Save recent activity to cookie whenever it changes
-    setCookie("recentActivity", JSON.stringify(recentActivity));
+    setCookie('recentActivity', JSON.stringify(recentActivity));
   }, [recentActivity]);
 
   const getCookie = (name) => {
     const cookieValue = document.cookie.match(
-      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        '(^|;)\\s*' + name + '\\s*=\\s*([^;]+)',
     );
-    return cookieValue ? cookieValue.pop() : "";
+    return cookieValue ? cookieValue.pop() : '';
   };
 
   const setCookie = (name, value) => {
-    document.cookie = name + "=" + value + "; path=/";
+    document.cookie = name + '=' + value + '; path=/';
   };
 
   return (
@@ -95,10 +96,10 @@ function SignUpForum() {
       </Box>
 
       <Box p={5}>
-        <Text fontWeight="bold" align={"left"}>
+        <Text fontWeight="bold" align={'left'}>
           Threads
         </Text>
-        <Text fontWeight="bold" align={"right"}>
+        <Text fontWeight="bold" align={'right'}>
           Replies
         </Text>
         {threads.map((thread) => (
@@ -108,7 +109,7 @@ function SignUpForum() {
             p={3}
             mt={2}
             key={thread.id}
-            _hover={{ bg: "lightblue" }}
+            _hover={{bg: 'lightblue'}}
             transition="background-color 0.3s"
             onClick={() => handleThreadClick(thread)}
             cursor="pointer"
