@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import "./Splash.css";
-import LogoLoader from "../../components/Loader/LoaderLogo";
+import {useEffect, useState} from 'react';
+import {useNavigate} from 'react-router-dom';
+import './Splash.css';
+import LogoLoader from '../../components/Loader/LoaderLogo';
 
 function AnimatedSplash(props) {
   return (
     <div className="logo_wrapper">
-        <LogoLoader id="logo" />
+      <LogoLoader id="logo" />
     </div>
   );
 }

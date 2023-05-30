@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import {useContext, useState} from 'react';
 import {
   Button,
   FormControl,
@@ -12,24 +12,24 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
-import { UserContext } from "../../context/UserContext";
+import {UserContext} from '../../context/UserContext';
 
-function LoginModal({ onClose, isOpen }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const { setUser } = useContext(UserContext);
-//   const [users, setUsers] = useState([]);
-//   const [selectedUser, setSelectedUser] = useState(null);
-//   const [error, setError] = useState(null); // State for storing the error message
-//   const { isOpen, onToggle } = useDisclosure();
-//   const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
+function LoginModal({onClose, isOpen}) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const {setUser} = useContext(UserContext);
+  //   const [users, setUsers] = useState([]);
+  //   const [selectedUser, setSelectedUser] = useState(null);
+  //   const [error, setError] = useState(null); // State for storing the error message
+  //   const { isOpen, onToggle } = useDisclosure();
+  //   const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
 
   const signIn = async () => {
     try {
       const data = await fetch('http://localhost:3001/signin', { // updated here
         method: 'POST',
         headers: {
-          'Authorization': 'Basic ' + btoa(username + ":" + password),
+          'Authorization': 'Basic ' + btoa(username + ':' + password),
         },
       });
 
@@ -42,12 +42,10 @@ function LoginModal({ onClose, isOpen }) {
       setUser(userData); // Set the user in context
 
       onClose();
-
     } catch (error) {
       console.error(error);
     }
   };
-
 
 
   return (

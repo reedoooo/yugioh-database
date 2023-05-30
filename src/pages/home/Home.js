@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { Grid, Box } from "@chakra-ui/react";
-import Search from "../../containers/search/Search";
-import Navbar from "../../containers/navbar/Navbar";
-import Deck from "../../containers/deck/Deck";
+import {Grid, Box} from '@chakra-ui/react';
+import Search from '../../containers/search/Search';
+import Navbar from '../../containers/navbar/Navbar';
+import Deck from '../../containers/deck/Deck';
+import {useState} from 'react';
 // import Deck from "../../containers/deck/Deck";
 
 

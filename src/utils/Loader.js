@@ -1,6 +1,5 @@
-import React from "react";
-import { Box, Spinner } from "@chakra-ui/react";
-import cardPlaceholder from "./placeholder.png";
+import {Box, Spinner} from '@chakra-ui/react';
+import cardPlaceholder from './placeholder.png';
 
 const Loader = () => {
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {useState} from 'react';
 import {
   Button,
   FormControl,
@@ -11,13 +11,13 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 // import SignUpForum from "../SignUpForum";
 
-function SignUpModal({ isOpen, onClose, onSignUp, signUpResponse, setSignUpResponse }) {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-//   const [signUpResponse, setSignUpResponse] = useState(null);
+function SignUpModal({isOpen, onClose, onSignUp, signUpResponse, setSignUpResponse}) {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  //   const [signUpResponse, setSignUpResponse] = useState(null);
 
   const signUp = async () => {
     try {
@@ -26,17 +26,17 @@ function SignUpModal({ isOpen, onClose, onSignUp, signUpResponse, setSignUpRespo
         password,
       };
 
-      const response = await fetch("http://localhost:3001/signup", {
+      const response = await fetch('http://localhost:3001/signup', {
         // using full URL to bypass proxy
-        method: "POST",
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
       });
 
       if (!response.ok) {
-        throw new Error("Signup failed");
+        throw new Error('Signup failed');
       }
 
       const data = await response.json();
@@ -84,7 +84,7 @@ function SignUpModal({ isOpen, onClose, onSignUp, signUpResponse, setSignUpRespo
           </ModalFooter>
         </ModalContent>
       </Modal>
-      
+
       {/* <SignUpForum signUpResponse={signUpResponse} /> */}
     </div>
   );

@@ -1,16 +1,16 @@
-import { Box, Flex, Text, Button, useDisclosure, Avatar, Menu, MenuButton, MenuList } from "@chakra-ui/react";
-import { NavLink } from "react-router-dom";
-import LoginModal from "../../components/modals/LoginModal";
-import SignUpModal from "../../components/modals/SignUpModal";
-import { UserContext } from "../../context/UserContext";
-import { useContext, useEffect } from "react";
-import { FaBars } from "react-icons/fa";
-import { AiOutlineLogout } from "react-icons/ai";
-import NavLinkItem from "./NavLinkItem";
+import {Box, Flex, Text, Button, useDisclosure, Avatar, Menu, MenuButton, MenuList} from '@chakra-ui/react';
+import {NavLink} from 'react-router-dom';
+import LoginModal from '../../components/modals/LoginModal';
+import SignUpModal from '../../components/modals/SignUpModal';
+import {UserContext} from '../../context/UserContext';
+import {useContext, useEffect} from 'react';
+import {FaBars} from 'react-icons/fa';
+import {AiOutlineLogout} from 'react-icons/ai';
+import NavLinkItem from './NavLinkItem';
 
 const NavBar = () => {
-  const { user, setUser } = useContext(UserContext);
-  const { onClose } = useDisclosure();
+  const {user, setUser} = useContext(UserContext);
+  const {onClose} = useDisclosure();
 
   const {
     isOpen: isLoginOpen,
@@ -35,32 +35,32 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    const token = getCookie("token");
-    const username = getCookie("username");
-    const id = getCookie("id");
-    const role = getCookie("role");
+    const token = getCookie('token');
+    const username = getCookie('username');
+    const id = getCookie('id');
+    const role = getCookie('role');
 
     if (token && username && id && role) {
-      setUser({ token, username, id, role });
+      setUser({token, username, id, role});
     }
   }, [setUser]);
 
   useEffect(() => {
-    setCookie("token", user?.token);
-    setCookie("username", user?.username);
-    setCookie("id", user?.id);
-    setCookie("role", user?.role);
+    setCookie('token', user?.token);
+    setCookie('username', user?.username);
+    setCookie('id', user?.id);
+    setCookie('role', user?.role);
   }, [user?.token, user?.username, user?.id, user?.role]);
 
   const getCookie = (name) => {
     const cookieValue = document.cookie.match(
-      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        '(^|;)\\s*' + name + '\\s*=\\s*([^;]+)',
     );
-    return cookieValue ? cookieValue.pop() : "";
+    return cookieValue ? cookieValue.pop() : '';
   };
 
   const setCookie = (name, value) => {
-    document.cookie = name + "=" + value + "; path=/";
+    document.cookie = name + '=' + value + '; path=/';
   };
 
   const handleLogout = () => {
@@ -111,14 +111,14 @@ const NavBar = () => {
             >
               Menu
             </MenuButton>
-            <MenuList bg={"secondary.200"}>
+            <MenuList bg={'secondary.200'}>
               <NavLinkItem to="/signupforum">Signup Forum</NavLinkItem>
               <NavLinkItem to="/home">Home</NavLinkItem>
               <NavLinkItem to="/usergrid">User Grid</NavLinkItem>
               {user ? (
                 <NavLinkItem onClick={handleLogout}>
                   <Flex alignItems="center">
-                    <AiOutlineLogout style={{ marginRight: "0.5rem" }} />
+                    <AiOutlineLogout style={{marginRight: '0.5rem'}} />
                     Logout
                   </Flex>
                 </NavLinkItem>

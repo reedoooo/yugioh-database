@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import {useCallback, useContext, useEffect, useState} from 'react';
 import {
   Box,
   Collapse,
@@ -6,59 +6,57 @@ import {
   GridItem,
   Text,
   useDisclosure,
-} from "@chakra-ui/react";
-import { UserContext } from "../../context/UserContext"; // Assuming UserContext is in the same directory
+} from '@chakra-ui/react';
+import {UserContext} from '../../context/UserContext'; // Assuming UserContext is in the same directory
 
 function UserGrid() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [error, setError] = useState(null); // State for storing the error message
-  const { isOpen, onToggle } = useDisclosure();
-  const { user, setUser } = useContext(UserContext); // Update the user state using the setUser function
+  const {isOpen, onToggle} = useDisclosure();
+  const {user, setUser} = useContext(UserContext); // Update the user state using the setUser function
 
   const getUsers = useCallback(async () => {
     const token = user?.token;
 
     try {
-      const response = await fetch("http://localhost:3001/users", {
-        method: "GET",
+      const response = await fetch('http://localhost:3001/users', {
+        method: 'GET',
         headers: {
-          Authorization: "Bearer " + token,
+          Authorization: 'Bearer ' + token,
         },
       });
 
       if (!response.ok) {
-        throw new Error("Get users failed");
+        throw new Error('Get users failed');
       }
       const data = await response.json();
       console.log(data.users);
-    //   // If 'data' is an array of user objects:
+      //   // If 'data' is an array of user objects:
       if (
         Array.isArray(data) &&
         data.length > 0 &&
-        typeof data[0] === "object"
+        typeof data[0] === 'object'
       ) {
         setUsers(data);
-      }
-      // If 'data' is an array of usernames, convert to array of objects:
-      else if (Array.isArray(data) && typeof data[0] === "string") {
-        const users = data.map((username) => ({ username }));
+      } else if (Array.isArray(data) && typeof data[0] === 'string') {
+        const users = data.map((username) => ({username}));
         setUsers(users);
       }
-    //   setUsers(users);
+      //   setUsers(users);
 
       //   setUsers(data);
     } catch (error) {
       // Handle the error
       setError(error.message);
     }
-}, [user?.token]);
+  }, [user?.token]);
 
-useEffect(() => {
-  getUsers();
-}, [getUsers]);
+  useEffect(() => {
+    getUsers();
+  }, [getUsers]);
 
-  const UserRow = ({ user }) => {
+  const UserRow = ({user}) => {
     return (
       <GridItem
         as="button"
@@ -66,7 +64,7 @@ useEffect(() => {
           setSelectedUser(user);
           onToggle();
         }}
-        _hover={{ bg: "lightblue" }}
+        _hover={{bg: 'lightblue'}}
         transition="background-color 0.3s"
         p={4}
       >
@@ -77,26 +75,26 @@ useEffect(() => {
 
   useEffect(() => {
     // Load user token from cookie on component mount
-    const token = getCookie("token");
+    const token = getCookie('token');
     if (token) {
-      setUser({ token });
+      setUser({token});
     }
   }, [setUser]);
 
   useEffect(() => {
     // Save user token to cookie whenever it changes
-    setCookie("token", user?.token);
+    setCookie('token', user?.token);
   }, [user?.token]);
 
   const getCookie = (name) => {
     const cookieValue = document.cookie.match(
-      "(^|;)\\s*" + name + "\\s*=\\s*([^;]+)"
+        '(^|;)\\s*' + name + '\\s*=\\s*([^;]+)',
     );
-    return cookieValue ? cookieValue.pop() : "";
+    return cookieValue ? cookieValue.pop() : '';
   };
 
   const setCookie = (name, value) => {
-    document.cookie = name + "=" + value + "; path=/";
+    document.cookie = name + '=' + value + '; path=/';
   };
 
   console.log(users);

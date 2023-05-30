@@ -1,11 +1,11 @@
-import { Button } from "@chakra-ui/button";
-import { Input } from "@chakra-ui/input";
-import { Box, SimpleGrid, VStack } from "@chakra-ui/layout";
-import { Select } from "@chakra-ui/select";
-import axios from "axios";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import Cards from "../cards/Cards";
+import {Button} from '@chakra-ui/button';
+import {Input} from '@chakra-ui/input';
+import {Box, SimpleGrid, VStack} from '@chakra-ui/layout';
+import {Select} from '@chakra-ui/select';
+import axios from 'axios';
+import {useState} from 'react';
+import {useDispatch} from 'react-redux';
+import Cards from '../cards/Cards';
 
 const Search = ({
   cards,
@@ -16,31 +16,29 @@ const Search = ({
   setDeck,
 }) => {
   const dispatch = useDispatch();
-  const [name, setName] = useState("");
-  const [race, setRace] = useState("");
-  const [type, setType] = useState("");
-  const [attribute, setAttribute] = useState("");
-  const [level, setLevel] = useState("");
+  const [name, setName] = useState('');
+  const [race, setRace] = useState('');
+  const [type, setType] = useState('');
+  const [attribute, setAttribute] = useState('');
+  const [level, setLevel] = useState('');
 
   const request = async () => {
-    dispatch({ type: "SET_LOADING_STATE", payload: true });
+    dispatch({type: 'SET_LOADING_STATE', payload: true});
     try {
       // http://localhost:3001/api/v1/decks
-      const response = await axios.post("http://localhost:3001/api/v7", { 
-        name: name, 
-        race: race, 
-        type: type, 
-        level: level, 
-        attribute: attribute 
+      const response = await axios.post('http://localhost:3001/api/v7', {
+        name: name,
+        race: race,
+        type: type,
+        level: level,
+        attribute: attribute,
       });
       console.log(response.data);
-      
+
       setCards(response.data.data); // Update the state with the first card data
-
-
     } catch (err) {
       console.log(err);
-      dispatch({ type: "SET_LOADING_STATE", payload: false });
+      dispatch({type: 'SET_LOADING_STATE', payload: false});
     }
   };
 
@@ -55,7 +53,7 @@ const Search = ({
   // };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       request();
     }
   };
@@ -63,8 +61,8 @@ const Search = ({
   const levelSelector = (
     <>
       <Select
-        onChange={({ target: { value } }) =>
-          setLevel(value.toLowerCase() === "unset" ? "" : `${value}`)
+        onChange={({target: {value}}) =>
+          setLevel(value.toLowerCase() === 'unset' ? '' : `${value}`)
         }
       >
         <option defaultChecked={true}>Unset</option>
@@ -88,8 +86,8 @@ const Search = ({
       {/* <FormLabel>{value}</FormLabel> */}
       <Select
         placeholder="Select option"
-        onChange={({ target: { value } }) =>
-          setRace(value.toLowerCase() === "unset" ? "" : `${value}`)
+        onChange={({target: {value}}) =>
+          setRace(value.toLowerCase() === 'unset' ? '' : `${value}`)
         }
       >
         <option>Unset</option>
@@ -138,8 +136,8 @@ const Search = ({
   const typeSelector = (
     <>
       <Select
-        onChange={({ target: { value } }) =>
-          setType(value.toLowerCase() === "unset" ? "" : `${value}`)
+        onChange={({target: {value}}) =>
+          setType(value.toLowerCase() === 'unset' ? '' : `${value}`)
         }
       >
         <option>Unset</option>
@@ -173,7 +171,7 @@ const Search = ({
           <option>Synchro Tuner Monster</option>
           <option>XYZ Monster</option>
           <option>XYZ Pendulum Effect Monster</option>
-        </optgroup>{" "}
+        </optgroup>{' '}
       </Select>
     </>
   );
@@ -181,10 +179,8 @@ const Search = ({
   const attributeSelector = (
     <>
       <Select
-        onChange={({ target: { value } }) =>
-          setAttribute(
-            value.toLowerCase() === "unset" ? "" : `${value}`
-          )
+        onChange={({target: {value}}) =>
+          setAttribute(value.toLowerCase() === 'unset' ? '' : `${value}`)
         }
       >
         <option>Unset</option>
@@ -206,20 +202,20 @@ const Search = ({
       height="100vh"
       borderRadius="lg"
       css={{
-        "&::-webkit-scrollbar": {
-          width: "8px",
+        '&::-webkit-scrollbar': {
+          width: '8px',
         },
-        "&::-webkit-scrollbar-track": {
-          backgroundColor: "gray.200",
+        '&::-webkit-scrollbar-track': {
+          backgroundColor: 'gray.200',
         },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "gray.500",
-          borderRadius: "20px",
+        '&::-webkit-scrollbar-thumb': {
+          backgroundColor: 'gray.500',
+          borderRadius: '20px',
         },
       }}
     >
       <VStack padding="5" spacing="5">
-      <Input
+        <Input
           type="text"
           placeholder="Type card name"
           onChange={(event) => setName(event.target.value)}
@@ -231,10 +227,7 @@ const Search = ({
 
         <VStack spacing={3}>{attributeSelector}</VStack>
 
-        <Button
-          className="search-button"
-          onClick={request}
-        >
+        <Button className="search-button" onClick={request}>
           Search
         </Button>
 
@@ -246,7 +239,6 @@ const Search = ({
                   <Cards
                     cardAddedToDeck={cardAddedToDeck}
                     setCardAddedToDeck={setCardAddedToDeck}
-
                     key={index}
                     deck={deck}
                     setDeck={setDeck}

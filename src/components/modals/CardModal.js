@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Modal,
   ModalOverlay,
@@ -14,7 +13,7 @@ import {
   Heading,
   Flex,
   Grid,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   FaLevelUpAlt,
   FaShieldAlt,
@@ -22,7 +21,8 @@ import {
   FaVenusMars,
   FaDragon,
   FaRegLightbulb,
-} from "react-icons/fa";
+} from 'react-icons/fa';
+
 
 // theme.colors.gray = {
 //   500: "#A0AEC0", // Adjust the shade of gray as needed
@@ -32,7 +32,6 @@ const CardModal = ({
   isOpen,
   onClose,
   cardInfo,
-  cardAddedToDeck,
   setCardAddedToDeck,
   deck,
   setDeck,
@@ -40,7 +39,7 @@ const CardModal = ({
   // const [deck, setDeck] = useState([]);
 
   const determineCardForAdd = () => {
-    let cardCount = deck.filter((card) => card.id === cardInfo.id).length;
+    const cardCount = deck.filter((card) => card.id === cardInfo.id).length;
     if (cardCount < 3) {
       setDeck([...deck, cardInfo]);
       setCardAddedToDeck((prevState) => ({
@@ -48,16 +47,16 @@ const CardModal = ({
         [cardInfo.id]: true,
       }));
     } else {
-      console.log("You can't add more than 3 of the same card to your deck");
+      console.log('You can\'t add more than 3 of the same card to your deck');
     }
   };
 
   const determineCardForRemove = () => {
-    let updatedDeck = deck.filter((card) => card.id !== cardInfo.id);
+    const updatedDeck = deck.filter((card) => card.id !== cardInfo.id);
     if (updatedDeck.length !== deck.length) {
       setDeck(updatedDeck);
     } else {
-      console.log("You can't remove a card that isn't in your deck");
+      console.log('You can\'t remove a card that isn\'t in your deck');
     }
   };
 
