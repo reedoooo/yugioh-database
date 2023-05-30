@@ -1,11 +1,11 @@
-"use strict";
 
-const { Sequelize, DataTypes } = require("sequelize");
-const cardModel = require("./cards/model.js");
-const deckModel = require("./decks/model.js");
-const DataCollection = require("./data-collection.js");
-console.log(DataCollection)
-const DATABASE_URL = process.env.DATABASE_URL || "sqlite:memory:";
+
+const {Sequelize, DataTypes} = require('sequelize');
+const cardModel = require('./cards/model.js');
+const deckModel = require('./decks/model.js');
+const DataCollection = require('./data-collection.js');
+console.log(DataCollection);
+const DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory:';
 
 const sequelize = new Sequelize(DATABASE_URL);
 

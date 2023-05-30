@@ -1,0 +1,4 @@
+[[redirects]]
+from = "/api/*"
+to = "https://db.ygoprodeck.com/api/v7/:splat"
+status = 200
