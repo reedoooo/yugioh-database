@@ -1,4 +1,4 @@
 [[redirects]]
-from = "/api/*"
+from = "/api/v7/*"
 to = "https://db.ygoprodeck.com/api/v7/:splat"
 status = 200
