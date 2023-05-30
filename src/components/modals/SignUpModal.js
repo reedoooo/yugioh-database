@@ -13,7 +13,8 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 // import SignUpForum from "../SignUpForum";
-
+import config from '../../config';
+const apiUrl = config.apiUrl;
 function SignUpModal({isOpen, onClose, onSignUp, signUpResponse, setSignUpResponse}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +27,7 @@ function SignUpModal({isOpen, onClose, onSignUp, signUpResponse, setSignUpRespon
         password,
       };
 
-      const response = await fetch('http://localhost:3001/signup', {
+      const response = await fetch(`${apiUrl}/signup`, {
         // using full URL to bypass proxy
         method: 'POST',
         headers: {

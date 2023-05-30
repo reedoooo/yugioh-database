@@ -6,6 +6,10 @@ import {ChakraProvider} from '@chakra-ui/react';
 import UserGridPage from '../pages/userGrid/UserGridPage';
 import {UserContext} from '../context/UserContext';
 import theme from '../assets/chakrathemes';
+import config from '../config';
+
+const apiUrl = config.apiUrl;
+
 
 const Main = () => {
   const [users, setUsers] = useState([]);
@@ -15,7 +19,7 @@ const Main = () => {
     const token = user?.token;
 
     try {
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch(`${apiUrl}/users`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,

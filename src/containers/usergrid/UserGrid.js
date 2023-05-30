@@ -8,7 +8,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import {UserContext} from '../../context/UserContext'; // Assuming UserContext is in the same directory
-
+import config from '../../config';
+const apiUrl = config.apiUrl;
 function UserGrid() {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
@@ -20,7 +21,7 @@ function UserGrid() {
     const token = user?.token;
 
     try {
-      const response = await fetch('http://localhost:3001/users', {
+      const response = await fetch(`${apiUrl}/users`, {
         method: 'GET',
         headers: {
           Authorization: 'Bearer ' + token,

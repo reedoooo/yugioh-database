@@ -1,12 +1,13 @@
 // import { useEffect } from 'react';
 import axios from 'axios';
 import {useEffect} from 'react';
-
+import config from '../../config';
+const apiUrl = config.apiUrl;
 const DeckFetcher = ({setDeckData, setDeckOptions}) => {
   useEffect(() => {
     const fetchDeck = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/v1/decks', {
+        const response = await axios.get(`${apiUrl}/api/v1/decks`, {
           //   params: {
           //     include: "cards",
           //   },

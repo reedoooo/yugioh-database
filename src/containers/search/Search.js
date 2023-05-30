@@ -6,6 +6,8 @@ import axios from 'axios';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import Cards from '../cards/Cards';
+import config from '../../config';
+const apiUrl = config.apiUrl;
 
 const Search = ({
   cards,
@@ -25,8 +27,8 @@ const Search = ({
   const request = async () => {
     dispatch({type: 'SET_LOADING_STATE', payload: true});
     try {
-      // http://localhost:3001/api/v1/decks
-      const response = await axios.post('http://localhost:3001/api/v7', {
+      // apiUrl/api/v1/decks
+      const response = await axios.post(`${apiUrl}/api/v7`, {
         name: name,
         race: race,
         type: type,
