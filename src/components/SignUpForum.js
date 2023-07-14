@@ -20,7 +20,7 @@ import {UserContext} from '../context/UserContext';
 function SignUpForum() {
   const [recentActivity, setRecentActivity] = useState([]);
   const [selectedThread, setSelectedThread] = useState(null);
-  const {user} = useContext(UserContext);
+  const {user, userID} = useContext(UserContext);
   // Update the user state using the setUser function
 
   const {isOpen, onOpen, onClose} = useDisclosure();
@@ -76,6 +76,7 @@ function SignUpForum() {
               <Text fontSize="lg">Username: {user.username}</Text>
               <Text fontSize="lg">Role: {user.role}</Text>
               <Text fontSize="lg">Token: {user.token}</Text>
+              <Text fontSize="lg">ID: {userID}</Text>
             </Box>
           )}
           {!user && <Text fontSize="lg">No Response</Text>}

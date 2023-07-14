@@ -1,6 +1,5 @@
-// import React { useState } from 'react';
+import {useContext, useState, useEffect} from 'react';
 import axios from 'axios';
-// import Button from Chakra UI
 import {
   Button,
   VStack,
@@ -13,14 +12,14 @@ import {
   Box,
   useDisclosure,
 } from '@chakra-ui/react';
-// ...
 import DOMPurify from 'dompurify';
 import {AnimatePresence, motion} from 'framer-motion';
-import {useState} from 'react';
 import config from '../../config';
+import {UserContext} from '../../context/UserContext';
+
 const apiUrl = config.apiUrl;
 const MotionBox = motion(Box);
-// Framer motion variants for button
+
 const buttonVariants = {
   hover: {
     scale: 1.1,
@@ -33,17 +32,29 @@ const buttonVariants = {
   },
 };
 
-// Replace the Chakra UI Button with a motion component
-const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
+const DeckForm = ({safeDeck, loadDeck, setLoadDeck, setDeckData, deckID, setDeckID, deckData, deck}) => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [author, setAuthor] = useState('');
-  // const [userID, setUserID] = useState("");
   const [nameError, setNameError] = useState('');
   const [authorError, setAuthorError] = useState('');
   const [deckNameToDelete, setDeckNameToDelete] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const {isOpen, onOpen, onClose} = useDisclosure();
+  const {setUser} = useContext(UserContext);
+
+  useEffect(() => {
+    const userID = getCookie('userID');
+    if (userID) {
+      setUser({userID: userID});
+    }
+  }, []);
+
+  useEffect(() => {
+    if (deckID) {
+      handleSaveDeck();
+    }
+  }, [deckID]);
 
   const handleSaveDeck = async () => {
     console.log('handleSaveDeck', name, author, safeDeck);
@@ -54,12 +65,14 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
 
     try {
       const sanitizedDescription = DOMPurify.sanitize(description);
+      const userID = getCookie('userID');
 
       const newDeck = {
         name: name,
         description: sanitizedDescription,
         author: author,
-        // userID: userID,
+        userID: userID,
+        deckID: deckID,
         cards: safeDeck.map((card) => ({
           id: card.id,
           name: card.name,
@@ -76,10 +89,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
         })),
       };
 
-      const response = await axios.post(
-          `${apiUrl}/api/v1/decks`,
-          newDeck,
-      );
+      const response = await axios.post(`${apiUrl}/api/v1/decks`, newDeck);
       console.log('handleSaveDeck', response.data);
       setDeckData([...deckData, response.data]);
       setName('');
@@ -89,6 +99,20 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
       setAuthorError('');
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleGenerateDeckID = () => {
+    const userID = getCookie('userID');
+    const newDeckID = `${userID}${String.fromCharCode(97 + deckData.length)}`;
+    setDeckID(newDeckID);
+  };
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) {
+      return parts.pop().split(';').shift();
     }
   };
 
@@ -131,6 +155,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
       setIsLoading(false);
     }
   };
+
   const buttonStyle = {
     display: 'inline-flex',
     alignItems: 'center',
@@ -139,8 +164,8 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
     fontSize: '1em',
     borderRadius: '4px',
     cursor: 'pointer',
-    // more styles...
   };
+
   const formAnimation = {
     hidden: {width: '100px', x: 50},
     visible: {
@@ -155,7 +180,6 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
     exit: {width: '100px', x: 50},
   };
 
-  // create motion buttons
   const SaveDeckButton = motion.button;
   const UpdateDeckButton = motion.button;
   const DeleteDeckButton = motion.button;
@@ -236,7 +260,7 @@ const DeckForm = ({safeDeck, setDeckData, deckData, deck}) => {
               </UpdateDeckButton>
 
               <DeleteDeckButton
-                setDeckNameToDelete={setDeckNameToDelete}
+                // setDeckNameToDelete={setDeckNameToDelete}
                 onClick={() => handleDeleteDeckByName(deckNameToDelete)}
                 whileHover={buttonVariants.hover}
                 style={{
